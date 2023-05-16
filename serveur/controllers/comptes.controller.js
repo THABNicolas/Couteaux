@@ -1,4 +1,4 @@
-import {getAllAccounts,createAccount,updateAccount} from '../services/comptes.service.js';
+import {getAllAccounts,createAccount,updateAccount,getAllCouteaux,updateCouteau} from '../services/comptes.service.js';
 import bcrypt from 'bcrypt';
 
 export const authentification = (req, res) => {
@@ -71,6 +71,25 @@ export const modification = (req, res) => {
     let actif = req.body.actif;
     let role = req.body.role;
     updateAccount(id, nom, prenom, identifiant, actif, role, (err) => {
+        if (err) {
+            console.error(err);
+            res.status(400).send({message: "Erreur de modification", err: err});
+        } else {
+            res.status(200).send({message: "Modification réussie"});
+        }
+    });
+};
+
+export const couteaux = (req, res) => {
+    getAllCouteaux((err,couteaux) => {
+        return res.status(200).send(couteaux);
+    })
+};
+
+export const couteauM = (req, res) => {
+    let artcode = req.body.artcode;
+    let artdesignation = req.body.artdesignation;
+    updateCouteau(artcode, artdesignation, (err) => {
         if (err) {
             console.error(err);
             res.status(400).send({message: "Erreur de modification", err: err});

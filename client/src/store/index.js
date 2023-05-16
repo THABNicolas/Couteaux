@@ -12,7 +12,11 @@ export default new Vuex.Store({
     userModif:null,
     messageIn:"",
     messageMod:"",
-    nav:false
+    nav:false,
+    couteauModif:{},
+    squeletteModif: {},
+    plaquetteModif: {},
+    materiauModif: {}
   }),
   mutations: {
     setUserConnected(state, user){
@@ -35,6 +39,18 @@ export default new Vuex.Store({
     },
     setNav(state, nav){
       state.nav = nav;
+    },
+    setCouteauModif(state, couteau){
+      state.couteauModif = couteau;
+    },
+    setSqueletteModif(state, squelette){
+      state.squeletteModif = squelette;
+    },
+    setPlaquetteModif(state, plaquette){
+      state.plaquetteModif = plaquette;
+    },
+    setMateriauModif(state, materiau){
+      state.materiauModif = materiau;
     }
   }
 })

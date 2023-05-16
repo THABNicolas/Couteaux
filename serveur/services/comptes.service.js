@@ -1,5 +1,7 @@
 import mysql from 'mysql';
 import config from '../db/config.js';
+import sql from 'mssql';
+import Sconfig from '../db/config2.js';
 
 export const getAllAccounts = async(callback) => {
     const connexion = mysql.createConnection(config);
@@ -46,4 +48,18 @@ export const updateAccount = async(id, nom, prenom, identifiant, actif, role, ca
             return callback(null);
         });
     });
+};
+
+export const getAllCouteaux = async(callback) => {
+    await sql.connect(Sconfig);
+    const couteaux = await sql.query("SELECT ARTCODE, ARTDESIGNATION FROM ARTICLES INNER JOIN ARTFAMILLES ON ARTICLES.AFMID = ARTFAMILLES.AFMID WHERE ARTFAMILLES.AFMCODE = 'COUTEAU' AND ARTICLES.ARTISACTIF='O'");
+    await sql.close();
+    return callback(null,couteaux.recordsets[0]);
+};
+
+export const updateCouteau = async(artcode, artdesignation, callback) => {
+    await sql.connect(Sconfig);
+    await sql.query(`UPDATE ARTICLES SET ARTDESIGNATION = '${artdesignation}' WHERE ARTCODE = '${artcode}'`);
+    await sql.close();
+    return callback(null);
 };
