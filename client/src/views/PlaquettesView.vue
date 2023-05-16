@@ -20,13 +20,19 @@
                   <td>{{ row.item.disponibilite }}</td>
                   <td>{{ row.item.rang }}</td>
                   <td>
-                    <v-router>
-                        <v-btn>Modifier</v-btn>
-                    </v-router>
+                    <router-link to="modificationPlaquette">
+                        <v-btn @click="setPlaquetteModif(row.item)">Modifier</v-btn>
+                    </router-link>
+                  </td>
+                  <td>
+                    <v-btn @click="drop(row.item)">Supprimer</v-btn>
                   </td>
                 </tr>
               </template>
             </v-data-table>
+            <router-link to="ajoutPlaquette">
+              <v-btn>Ajouter</v-btn>
+            </router-link>
           </v-flex>
   
         </v-container>
@@ -37,11 +43,23 @@
 
 
 <script>
+import { mapMutations, mapState } from 'vuex';
+
 
 export default{
   name: 'AccueilView',
   metaInfo: {
     title: 'Accueil'
+  },
+  methods: {
+    ...mapMutations(['setPlaquetteModif']),
+    drop(item){
+      var idtodrop = item.id
+      const index = this.plaquettes.findIndex(obj => obj.id === idtodrop);
+      if (index !== -1) {
+        this.plaquettes.splice(index, 1);
+      }
+    }
   },
   data () {
     return {
@@ -52,51 +70,13 @@ export default{
         { text: 'description', value: 'description', sortable: true },
         { text: 'disponibilite', value: 'disponibilite', sortable: true },
         { text: 'rang', value: 'rang', sortable: true },
-        { text: 'Modification', value: 'modification', sortable: false }
-      ],
-      plaquettes: [
-        {
-            "id": "01",
-            "ref": "PC",
-            "nom": "Plaquette Centrale",
-            "categorie": "Plaquettes",
-            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PC.webp",
-            "description": "",
-            "disponibilite": "true",
-            "rang":1
-        },
-        {
-            "id": "02",
-            "ref": "PA",
-            "nom": "Plaquette Ajourée",
-            "categorie": "Plaquettes",
-            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PA.webp",
-            "description": "",
-            "disponibilite": "true",
-            "rang":2
-        },
-        {
-            "id": "03",
-            "ref": "PP",
-            "nom": "Plaquette Pleine",
-            "categorie": "Plaquettes",
-            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PP.webp",
-            "description": "",
-            "disponibilite": "true",
-            "rang":3
-        },
-        {
-            "id": "99",
-            "ref": "SP",
-            "nom": "Sans Plaquette",
-            "categorie": "Plaquettes",
-            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/BLANK.webp",
-            "description": "",
-            "disponibilite": "true",
-            "rang":4
-        }
+        { text: 'Modification', value: 'modification', sortable: false },
+        { text: 'Supression', value: 'supression', sortable: false }
       ]
     }
+  },
+  computed: {
+    ...mapState(['plaquettes'])
   }
 }
 

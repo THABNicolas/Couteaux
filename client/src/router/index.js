@@ -12,6 +12,9 @@ import MateriauxView from '../views/MateriauxView'
 import ModificationSqueletteView from '../views/ModificationSqueletteView'
 import ModificationPlaquetteView from '../views/ModificationPlaquetteView'
 import ModificationMateriauView from '../views/ModificationMateriauView'
+import AjoutSqueletteView from '../views/AjoutSqueletteView'
+import AjoutPlaquetteView from '../views/AjoutPlaquetteView'
+import AjoutMateriauView from '../views/AjoutMateriauView'
 import $cookie from "vue-cookie"
 
 Vue.use(VueRouter)
@@ -112,6 +115,33 @@ const routes = [
     path: '/modificationMateriau',
     name: 'modificationmateriau',
     component: ModificationMateriauView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
+  {
+    path: '/ajoutSquelette',
+    name: 'ajoutsquelette',
+    component: AjoutSqueletteView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
+  {
+    path: '/ajoutPlaquette',
+    name: 'ajoutplaquette',
+    component: AjoutPlaquetteView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
+  {
+    path: '/ajoutMateriau',
+    name: 'ajoutmateriau',
+    component: AjoutMateriauView,
     meta: {
       authRequired: true,
       rolePermission: ["admin","utilisateur"]

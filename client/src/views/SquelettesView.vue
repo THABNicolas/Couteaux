@@ -22,12 +22,18 @@
                   <td>{{ row.item.disponibilite }}</td>
                   <td>
                     <router-link to="modificationSquelette">
-                        <v-btn  depressed color="blue" @click="setSqueletteModif(row.item)">Modifier</v-btn>
+                        <v-btn @click="setSqueletteModif(row.item)">Modifier</v-btn>
                     </router-link>
+                  </td>
+                  <td>
+                    <v-btn @click="drop(row.item)">Supprimer</v-btn>
                   </td>
                 </tr>
               </template>
             </v-data-table>
+            <router-link to="ajoutSquelette">
+              <v-btn>Ajouter</v-btn>
+            </router-link>
           </v-flex>
   
         </v-container>
@@ -38,7 +44,7 @@
 
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default{
   name: 'AccueilView',
@@ -46,7 +52,14 @@ export default{
     title: 'Accueil'
   },
   methods: {
-    ...mapMutations(['setSqueletteModif'])
+    ...mapMutations(['setSqueletteModif']),
+    drop(item){
+      var idtodrop = item.id
+      const index = this.squelettes.findIndex(obj => obj.id === idtodrop);
+      if (index !== -1) {
+        this.squelettes.splice(index, 1);
+      }
+    }
   },
   data () {
     return {
@@ -58,47 +71,13 @@ export default{
         { text: 'description', value: 'description', sortable: true },
         { text: 'gravure', value: 'gravure', sortable: true },
         { text: 'disponibilite', value: 'disponibilite', sortable: true },
-        { text: 'Modification', value: 'modification', sortable: false }
-      ],
-      squelettes: [
-        {
-            "id": "01",
-            "ref": "KB",
-            "nom": "Finition brillante",
-            "prix": 60,
-            "categorie": "Squelettes",
-            "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KB.webp",
-            "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KBA.webp",
-            "description": "19 cm",
-            "gravure": "LF",
-            "disponibilite": "true"
-        },
-        {
-            "id": "02",
-            "ref": "KG",
-            "nom": "Finition titane gris",
-            "prix": 60,
-            "categorie": "Squelettes",
-            "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KG.webp",
-            "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KGA.webp",
-            "description": "19 cm",
-            "gravure": "LF",
-            "disponibilite": "true"
-        },
-        {
-            "id": "03",
-            "ref": "KN",
-            "nom": "Finition titane noir",
-            "prix": 60,
-            "categorie": "Squelettes",
-            "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KN.webp",
-            "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KNA.webp",
-            "description": "19 cm",
-            "gravure": "LF",
-            "disponibilite": "true"
-        }
+        { text: 'Modification', value: 'modification', sortable: false },
+        { text: 'Supression', value: 'supression', sortable: false }
       ]
     }
+  },
+  computed: {
+    ...mapState(['squelettes'])
   }
 }
 
