@@ -15,6 +15,7 @@ import ModificationMateriauView from '../views/ModificationMateriauView'
 import AjoutSqueletteView from '../views/AjoutSqueletteView'
 import AjoutPlaquetteView from '../views/AjoutPlaquetteView'
 import AjoutMateriauView from '../views/AjoutMateriauView'
+import VisView from '../views/VisView'
 import $cookie from "vue-cookie"
 
 Vue.use(VueRouter)
@@ -142,6 +143,15 @@ const routes = [
     path: '/ajoutMateriau',
     name: 'ajoutmateriau',
     component: AjoutMateriauView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
+  {
+    path: '/vis',
+    name: 'vis',
+    component: VisView,
     meta: {
       authRequired: true,
       rolePermission: ["admin","utilisateur"]

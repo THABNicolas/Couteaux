@@ -18,84 +18,87 @@ export default new Vuex.Store({
     plaquetteModif: {},
     materiauModif: {},
     squelettes: [
-      {
-          "id": "01",
-          "ref": "KB",
-          "nom": "Finition brillante",
-          "prix": 60,
-          "categorie": "Squelettes",
-          "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KB.webp",
-          "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KBA.webp",
-          "description": "19 cm",
-          "gravure": "LF",
-          "disponibilite": "true"
-      },
-      {
-          "id": "02",
-          "ref": "KG",
-          "nom": "Finition titane gris",
-          "prix": 60,
-          "categorie": "Squelettes",
-          "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KG.webp",
-          "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KGA.webp",
-          "description": "19 cm",
-          "gravure": "LF",
-          "disponibilite": "true"
-      },
-      {
-          "id": "03",
-          "ref": "KN",
-          "nom": "Finition titane noir",
-          "prix": 60,
-          "categorie": "Squelettes",
-          "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KN.webp",
-          "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KNA.webp",
-          "description": "19 cm",
-          "gravure": "LF",
-          "disponibilite": "true"
-      }
+        {
+              "id": "01",
+              "ref": "KB",
+              "nom": "Finition brillante",
+              "prix": 60,
+              "categorie": "Squelettes",
+              "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KB.webp",
+              "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KBA.webp",
+              "vis": "VC",
+              "description": "19 cm",
+              "gravure": "LF",
+              "disponibilite": "true"
+        },
+        {
+              "id": "02",
+              "ref": "KG",
+              "nom": "Finition titane gris",
+              "prix": 60,
+              "categorie": "Squelettes",
+              "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KG.webp",
+              "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KGA.webp",
+              "vis": "VC",
+              "description": "19 cm",
+              "gravure": "LF",
+              "disponibilite": "true"
+        },
+        {
+              "id": "03",
+              "ref": "KN",
+              "nom": "Finition titane noir",
+              "prix": 60,
+              "categorie": "Squelettes",
+              "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KN.webp",
+              "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/KNA.webp",
+              "vis": "VF",
+              "description": "19 cm",
+              "gravure": "LF",
+              "disponibilite": "true"
+        }
     ],
     plaquettes: [
-      {
-          "id": "01",
-          "ref": "PC",
-          "nom": "Plaquette Centrale",
-          "categorie": "Plaquettes",
-          "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PC.webp",
-          "description": "",
-          "disponibilite": "true",
-          "rang":1
-      },
-      {
-          "id": "02",
-          "ref": "PA",
-          "nom": "Plaquette Ajourée",
-          "categorie": "Plaquettes",
-          "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PA.webp",
-          "description": "",
-          "disponibilite": "true",
-          "rang":2
-      },
-      {
-          "id": "03",
-          "ref": "PP",
-          "nom": "Plaquette Pleine",
-          "categorie": "Plaquettes",
-          "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PP.webp",
-          "description": "",
-          "disponibilite": "true",
-          "rang":3
-      },
-      {
-          "id": "99",
-          "ref": "SP",
-          "nom": "Sans Plaquette",
-          "categorie": "Plaquettes",
-          "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/BLANK.webp",
-          "description": "",
-          "disponibilite": "true",
-          "rang":4
-      }
+        {
+            "id": "01",
+            "ref": "PC",
+            "nom": "Plaquette Centrale",
+            "categorie": "Plaquettes",
+            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PC.webp",
+            "description": "",
+            "disponibilite": "true",
+            "rang":1
+        },
+        {
+            "id": "02",
+            "ref": "PA",
+            "nom": "Plaquette Ajourée",
+            "categorie": "Plaquettes",
+            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PA.webp",
+            "description": "",
+            "disponibilite": "true",
+            "rang":2
+        },
+        {
+            "id": "03",
+            "ref": "PP",
+            "nom": "Plaquette Pleine",
+            "categorie": "Plaquettes",
+            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/PP.webp",
+            "description": "",
+            "disponibilite": "true",
+            "rang":3
+        },
+        {
+            "id": "99",
+            "ref": "SP",
+            "nom": "Sans Plaquette",
+            "categorie": "Plaquettes",
+            "image": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/BLANK.webp",
+            "description": "",
+            "disponibilite": "true",
+            "rang":4
+        }
     ],
     materiaux: [
       {
@@ -434,6 +437,24 @@ export default new Vuex.Store({
           "prix": 5,
           "rang": 1
       }
+    ],
+    vis: [
+        {
+              "id": "01",
+              "ref": "VC",
+              "nom": "Vis clair",
+              "categorie": "vis",
+              "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/VC.webp",
+              "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/VCA.webp"
+         },
+        {
+              "id": "02",
+              "ref": "VF",
+              "nom": "Vis foncé",
+              "categorie": "vis",
+              "imageavant": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/VF.webp",
+              "imagearriere": "https://cdn.shopify.com/s/files/1/0685/6458/2668/files/VFA.webp"
+        }
     ]
   }),
   mutations: {
@@ -461,14 +482,11 @@ export default new Vuex.Store({
     setCouteauModif(state, couteau){
       state.couteauModif = couteau;
     },
-    setSqueletteModif(state, squelette){
-      state.squeletteModif = squelette;
+    setVis(state, vis){
+        state.vis = vis;
     },
-    setPlaquetteModif(state, plaquette){
-      state.plaquetteModif = plaquette;
-    },
-    setMateriauModif(state, materiau){
-      state.materiauModif = materiau;
+    setSquelettes(state, squelettes){
+        state.squelettes = squelettes;
     }
   }
 })

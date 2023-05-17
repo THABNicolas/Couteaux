@@ -6,12 +6,21 @@
         <v-alert v-if="errorForm" type="error">{{errorForm}}</v-alert>
         <v-card elevation='4' class='cardModification'>
           <div id='formModification' >
+            <label>Ref</label>
             <v-text-field type='text' id='ref' v-model="form.ref" required class="wider-text-field"></v-text-field>
+            <label>Nom</label>
             <v-text-field type='text' id='nom' v-model="form.nom" required class="wider-text-field"></v-text-field>
+            <label>Catégorie</label>
             <v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field>
+            <label>Description</label>
             <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
+            <label>Disponibilité</label>
+            <br>
             <input type='checkbox' id='disponibilite' v-model="form.disponibilite">
+            <br>
+            <label>Rang</label>
             <v-text-field type='text' id='rang' v-model="form.rang" required class="wider-text-field"></v-text-field>
+            <label>Image</label>
             <v-text-field type='text' id='image' v-model="form.image" required class="wider-text-field"></v-text-field>
             <v-btn color='green' @click="submitForm">Modifier</v-btn>
           </div>

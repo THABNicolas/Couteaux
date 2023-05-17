@@ -1,84 +1,248 @@
 <template>
-    <div class='accueil'>
-        <br><br><br>
-  
-        <v-container grid-list-lg>
-  
-          <v-flex>
-            <v-data-table id="tab" :headers="headers" :items="squelettes" 
-              :footer-props="{
-                'items-per-page-text': 'nombre de lignes par pages',
-                'items-per-page-options': [5, 10, 15],
-                'show-current-page': true,
-              }">
-              <template slot="item" slot-scope="row">
-                <tr>
-                  <td>{{ row.item.ref }}</td>
-                  <td>{{ row.item.nom }}</td>
-                  <td>{{ row.item.prix }}</td>
-                  <td>{{ row.item.categorie }}</td>
-                  <td>{{ row.item.description }}</td>
-                  <td>{{ row.item.gravure }}</td>
-                  <td>{{ row.item.disponibilite }}</td>
-                  <td>
-                    <router-link to="modificationSquelette">
-                        <v-btn @click="setSqueletteModif(row.item)">Modifier</v-btn>
-                    </router-link>
-                  </td>
-                  <td>
-                    <v-btn @click="drop(row.item)">Supprimer</v-btn>
-                  </td>
-                </tr>
-              </template>
-            </v-data-table>
-            <router-link to="ajoutSquelette">
-              <v-btn>Ajouter</v-btn>
-            </router-link>
-          </v-flex>
-  
-        </v-container>
-  
-    </div>
+
+  <div class='accueil'>
+      <br><br><br>
+
+      <v-container grid-list-lg>
+        <v-layout row>
+
+        <v-flex sm7>
+          <v-data-table id="tab" :headers="headers" :items="this.squelettes" class="text-center"
+            :footer-props="{
+              'items-per-page-text': 'nombre de lignes par pages',
+              'items-per-page-options': [5, 10, 15],
+              'show-current-page': true,
+            }">
+            <template slot="item" slot-scope="row">
+              <tr>
+                <td>{{ row.item.ref }}</td>
+                <td>{{ row.item.nom }}</td>
+                <td>
+                  <v-btn icon outlined @click="setSqueletteModif(row.item)">
+                    <v-icon>mdi-dots-horizontal</v-icon>
+                  </v-btn>
+                </td>
+                <td>
+                  <v-btn icon outlined @click="drop(row.item)">X</v-btn>
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+          <router-link to="ajoutSquelette">
+            <v-btn>Ajouter</v-btn>
+          </router-link>
+        </v-flex>
+
+        <v-flex sm5>
+          <v-alert v-if="errorForm" type="error">{{errorForm}}</v-alert>
+          <v-card elevation='4' class='cardModification'>
+            <div id='formModification' >
+
+              <v-container grid-list-lg>
+                <v-layout column>
+
+            
+                    <label><b>Nom</b></label>
+                    <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
+
+                    <v-layout row>
+                      <v-flex>
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Ref</b></label></v-flex>
+                          <v-flex><v-text-field type="text" id="ref" v-model="formRef" required class="wider-text-field"></v-text-field></v-flex>  
+                        </v-layout>
+                      </v-flex>
+                      <v-flex>
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Prix</b></label></v-flex>
+                          <v-flex><v-text-field type='text' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
+                    </v-layout>
+
+                    <v-layout row>
+                      <v-flex>
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Catégorie</b></label></v-flex>
+                          <v-flex><v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
+                      <v-flex>
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Vis</b></label></v-flex>
+                          <v-flex><v-text-field type='text' id='vis' v-model="form.vis" required class="wider-text-field"></v-text-field></v-flex>
+                        </v-layout>  
+                      </v-flex>
+                    </v-layout>
+
+                    <label><b>Description</b></label>
+                    <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
+
+                    <v-layout row>
+                      <v-flex>
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Gravure</b></label></v-flex>
+                          <v-flex><v-text-field type='text' id='gravure' v-model="form.gravure" required class="wider-text-field"></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
+                      <v-flex>
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Disponibilité</b></label></v-flex>
+                          <v-flex><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
+                        </v-layout>
+                      </v-flex>
+                    </v-layout>
+
+                    <label><b>Image Avant</b></label>
+                    <v-text-field type='text' id='imageavant' v-model="form.imageavant" required class="wider-text-field"></v-text-field>
+                    <v-img v-bind:src=form.imageavant></v-img>
+                    <br>
+                    <label><b>Image Arrière</b></label>
+                    <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
+                    <v-img v-bind:src=form.imagearriere></v-img>
+                    <br>
+                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
+           
+                    
+                </v-layout>
+              </v-container>
+
+            </div>
+          </v-card>
+        </v-flex>
+
+        </v-layout>
+      </v-container>
+
+  </div>
+
 </template>
 
 
 
 <script>
+
 import { mapMutations, mapState } from 'vuex';
 
 export default{
-  name: 'AccueilView',
-  metaInfo: {
-    title: 'Accueil'
+name: 'AccueilView',
+metaInfo: {
+  title: 'Accueil'
+},
+data () {
+  return {
+    headers: [
+      { text: 'ref', value: 'ref', sortable: true, align: 'center' },
+      { text: 'nom', value: 'nom', sortable: true, align: 'center' },
+      { text: 'Modification', value: 'modification', sortable: false, align: 'center' },
+      { text: 'Supression', value: 'supression', sortable: false, align: 'center' }
+    ],
+    squeletteModif: null,
+    form: {
+      ref: '',
+      nom: '',
+      prix: '',
+      categorie: '',
+      vis: '',
+      description: '',
+      gravure: '',
+      disponibilite: false,
+      imageavant: '',
+      imagearriere: '',
+      id: ''
+    },
+    errorForm: '',
+    formRef: '',
+    formNom: '',
+  }
+},
+computed: {
+  ...mapState(['squelettes'])
+},
+methods: {
+  ...mapMutations(['setSquelettes']),
+  drop(item){
+    var idtodrop = item.id
+    const index = this.squelettes.findIndex(obj => obj.id === idtodrop);
+    if (index !== -1) {
+      this.squelettes.splice(index, 1);
+    }
   },
-  methods: {
-    ...mapMutations(['setSqueletteModif']),
-    drop(item){
-      var idtodrop = item.id
-      const index = this.squelettes.findIndex(obj => obj.id === idtodrop);
+  setSqueletteModif(item) {
+    this.squeletteModif = item;
+    this.formRef = item.ref;
+    this.formNom = item.nom;
+    this.form = {
+      ref: item.ref,
+      nom: item.nom,
+      prix: item.prix,
+      categorie: item.categorie,
+      vis: item.vis,
+      description: item.description,
+      gravure: item.gravure,
+      disponibilite: item.disponibilite,
+      imageavant: item.imageavant,
+      imagearriere: item.imagearriere,
+      id: item.id
+    };
+  },
+  validateForm() {
+    if (!this.formRef || !this.formNom || !this.form.prix || !this.form.categorie || !this.form.vis || !this.form.description || !this.form.gravure || !this.form.imageavant || !this.form.imagearriere) {
+      this.errorForm = "Veuillez remplir tous les champs obligatoires";
+      return false;
+    }
+    this.errorForm = '';
+    return true;
+  },
+  submitForm() {
+    if (this.validateForm()) {
+      const targetid = this.form.id;
+      const index = this.squelettes.findIndex(v => v.id === targetid);
       if (index !== -1) {
-        this.squelettes.splice(index, 1);
+        const updatedSquelettes = [...this.squelettes];
+        updatedSquelettes[index] = {
+          ref: this.formRef,
+          nom: this.formNom,
+          prix: this.form.prix,
+          categorie: this.form.categorie,
+          vis: this.form.vis,
+          description: this.form.description,
+          gravure: this.form.gravure,
+          disponibilite: this.form.disponibilite,
+          imageavant: this.form.imageavant,
+          imagearriere: this.form.imagearriere,
+          id: this.form.id
+        };
+        this.setSquelettes(updatedSquelettes);
       }
     }
-  },
-  data () {
-    return {
-      headers: [
-        { text: 'ref', value: 'ref', sortable: true },
-        { text: 'nom', value: 'nom', sortable: true },
-        { text: 'prix', value: 'prix', sortable: true },
-        { text: 'categorie', value: 'categorie', sortable: true },
-        { text: 'description', value: 'description', sortable: true },
-        { text: 'gravure', value: 'gravure', sortable: true },
-        { text: 'disponibilite', value: 'disponibilite', sortable: true },
-        { text: 'Modification', value: 'modification', sortable: false },
-        { text: 'Supression', value: 'supression', sortable: false }
-      ]
-    }
-  },
-  computed: {
-    ...mapState(['squelettes'])
   }
+}
 }
 
 </script>
+
+
+
+<style scoped>
+
+#formModification {
+margin-top: 15px;
+margin-left: 9%;
+margin-right: 9%;
+}
+.cardModification {
+padding: 10px 0 20px 0;
+}
+input {
+  width: 25px;
+  height: 25px;
+}
+.wider-text-field{
+  width:100%;
+}
+label{
+  margin-bottom: -12px;
+}
+
+</style>

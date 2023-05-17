@@ -44,6 +44,14 @@
                 <v-list-item-title>matériaux</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            <v-list-item to="/vis" @click="expand(false)">
+              <v-list-item-icon>
+                <v-icon>mdi-circle-outline</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>vis</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
           </v-list-group>
           <v-list-item v-if="userConnected.role === null" to="/connexion" @click="expand(false)">
             <v-list-item-icon>
