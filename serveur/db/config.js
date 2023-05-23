@@ -1,4 +1,4 @@
-// configuration de la connexion à MySQL
+// configuration de la connexion à la bdd MySQL des comptes
 
 var config = {
   host     : 'localhost',

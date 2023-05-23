@@ -9,13 +9,14 @@ import ModificationCouteauView from '../views/ModificationCouteauView'
 import SquelettesView from '../views/SquelettesView'
 import PlaquettesView from '../views/PlaquettesView'
 import MateriauxView from '../views/MateriauxView'
-import ModificationSqueletteView from '../views/ModificationSqueletteView'
-import ModificationPlaquetteView from '../views/ModificationPlaquetteView'
-import ModificationMateriauView from '../views/ModificationMateriauView'
 import AjoutSqueletteView from '../views/AjoutSqueletteView'
 import AjoutPlaquetteView from '../views/AjoutPlaquetteView'
 import AjoutMateriauView from '../views/AjoutMateriauView'
+import AjoutVisView from '../views/AjoutVisView'
+import AjoutGravureView from '../views/AjoutGravureView'
 import VisView from '../views/VisView'
+import GravuresView from '../views/GravuresView'
+import CouteauxView from '../views/CouteauxView'
 import $cookie from "vue-cookie"
 
 Vue.use(VueRouter)
@@ -23,17 +24,22 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Accueil',
     component: AccueilView
   },
   {
+    path: '/couteaux',
+    name: 'Couteaux',
+    component: CouteauxView
+  },
+  {
     path: '/connexion',
-    name: 'connexion',
+    name: 'Connexion',
     component: ConnexionView
   },
   {
     path: '/administration',
-    name: 'administration',
+    name: 'Comptes',
     component: AdministrationView,
     meta: {
       authRequired: true,
@@ -42,7 +48,7 @@ const routes = [
   },
   {
     path: '/creation',
-    name: 'creation',
+    name: 'Ajouter un compte',
     component: CreationView,
     meta: {
       authRequired: true,
@@ -51,7 +57,7 @@ const routes = [
   },
   {
     path: '/modification',
-    name: 'modification',
+    name: 'Modifier un compte',
     component: ModificationView,
     meta: {
       authRequired: true,
@@ -60,7 +66,7 @@ const routes = [
   },
   {
     path: '/modificationC',
-    name: 'modificationC',
+    name: 'Modifier un couteau',
     component: ModificationCouteauView,
     meta: {
       authRequired: true,
@@ -69,7 +75,7 @@ const routes = [
   },
   {
     path: '/squelettes',
-    name: 'squelettes',
+    name: 'Squelettes',
     component: SquelettesView,
     meta: {
       authRequired: true,
@@ -78,7 +84,7 @@ const routes = [
   },
   {
     path: '/plaquettes',
-    name: 'plaquettes',
+    name: 'Plaquettes',
     component: PlaquettesView,
     meta: {
       authRequired: true,
@@ -87,7 +93,7 @@ const routes = [
   },
   {
     path: '/materiaux',
-    name: 'materiaux',
+    name: 'Materiaux',
     component: MateriauxView,
     meta: {
       authRequired: true,
@@ -95,35 +101,8 @@ const routes = [
     },
   },
   {
-    path: '/modificationSquelette',
-    name: 'modificationsquelette',
-    component: ModificationSqueletteView,
-    meta: {
-      authRequired: true,
-      rolePermission: ["admin","utilisateur"]
-    },
-  },
-  {
-    path: '/modificationPlaquette',
-    name: 'modificationplaquette',
-    component: ModificationPlaquetteView,
-    meta: {
-      authRequired: true,
-      rolePermission: ["admin","utilisateur"]
-    },
-  },
-  {
-    path: '/modificationMateriau',
-    name: 'modificationmateriau',
-    component: ModificationMateriauView,
-    meta: {
-      authRequired: true,
-      rolePermission: ["admin","utilisateur"]
-    },
-  },
-  {
     path: '/ajoutSquelette',
-    name: 'ajoutsquelette',
+    name: 'Ajouter un squelette',
     component: AjoutSqueletteView,
     meta: {
       authRequired: true,
@@ -132,7 +111,7 @@ const routes = [
   },
   {
     path: '/ajoutPlaquette',
-    name: 'ajoutplaquette',
+    name: 'Ajouter une plaquette',
     component: AjoutPlaquetteView,
     meta: {
       authRequired: true,
@@ -141,7 +120,7 @@ const routes = [
   },
   {
     path: '/ajoutMateriau',
-    name: 'ajoutmateriau',
+    name: 'Ajouter un materiau',
     component: AjoutMateriauView,
     meta: {
       authRequired: true,
@@ -150,13 +129,40 @@ const routes = [
   },
   {
     path: '/vis',
-    name: 'vis',
+    name: 'Vis',
     component: VisView,
     meta: {
       authRequired: true,
       rolePermission: ["admin","utilisateur"]
     },
-  }
+  },
+  {
+    path: '/ajoutVis',
+    name: 'Ajouter un vis',
+    component: AjoutVisView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
+  {
+    path: '/gravures',
+    name: 'Gravures',
+    component: GravuresView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
+  {
+    path: '/ajoutGravure',
+    name: 'Ajouter une gravure',
+    component: AjoutGravureView,
+    meta: {
+      authRequired: true,
+      rolePermission: ["admin","utilisateur"]
+    },
+  },
 ]
 
 const router = new VueRouter({
@@ -168,7 +174,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let user = JSON.parse($cookie.get('userAuthentificated'));
   if (to.meta.authRequired){
-    if (!to.meta.rolePermission.includes(user.role)){ // Si personne authentifié n'a pas les permissions de la page
+    if (!to.meta.rolePermission.includes(user.role)){
       next("/connexion");
     } else {
       next();

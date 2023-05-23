@@ -92,7 +92,7 @@ border-radius: 40px;
 padding: 10px 0 20px 0;
 }
 .wider-text-field {
-  width: 625px; /* Adjust the width as per your requirement */
+  width: 625px;
 }
 
 </style>

@@ -14,20 +14,20 @@
             <v-text-field type='number' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field>
             <label><b>Catégorie</b></label>
             <v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field>
-            <label><b>Vis</b></label>
-            <v-select id="vis" v-model="form.vis" :items="vis" item-value="ref" item-text="nom" required></v-select>
+            <label><b>Desc</b></label>
+            <v-text-field type='text' id='desc' v-model="form.desc" required class="wider-text-field"></v-text-field>
             <label><b>Description</b></label>
             <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
             <label><b>Gravure</b></label>
-            <v-select id="gravure" :items="gravures" v-model="form.gravure" required></v-select>
+            <v-text-field type='text' id='gravure' v-model="form.gravure" required class="wider-text-field"></v-text-field>
             <label><b>Disponibilite</b></label>
             <br>
             <input type='checkbox' id='disponibilite' v-model="form.disponibilite">
             <br>
-            <label><b>Image Avant</b></label>
-            <v-text-field type='text' id='imageavant' v-model="form.imageavant" required class="wider-text-field"></v-text-field>
-            <label><b>Image Arrière</b></label>
-            <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
+            <label><b>Image LF</b></label>
+            <v-text-field type='text' id='imageLF' v-model="form.imageLF" required class="wider-text-field"></v-text-field>
+            <label><b>Image LC</b></label>
+            <v-text-field type='text' id='imageLC' v-model="form.imageLC" required class="wider-text-field"></v-text-field>
             <v-btn color='green' @click="submitForm">Création</v-btn>
           </div>
         </v-card>
@@ -54,28 +54,23 @@ data(){
       nom: '',
       prix: '',
       categorie: '',
-      vis: '',
+      desc: '',
       description: '',
       gravure: '',
       disponibilite: true,
-      imageavant: '',
-      imagearriere: ''
+      imageLF: '',
+      imageLC: ''
     },
-    errorForm:"",
-    gravures: [
-      'LF',
-      'LC'
-    ]
+    errorForm:""
   }
 },
 computed: {
   ...mapState(['url']),
-  ...mapState(['squelettes']),
-  ...mapState(['vis'])
+  ...mapState(['gravures'])
 },
 methods: {
   validateForm() {
-    if (!this.form.ref || !this.form.nom || !this.form.prix || !this.form.categorie || !this.form.description || !this.form.gravure  || !this.form.imageavant  || !this.form.imagearriere) {
+    if (!this.form.ref || !this.form.nom || !this.form.prix || !this.form.categorie || !this.form.description || !this.form.gravure  || !this.form.imageLF  || !this.form.imageLC) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }
@@ -85,15 +80,15 @@ methods: {
   submitForm() {
     if (this.validateForm()) {
         let highestId = 0;
-        for (const obj of this.squelettes) {
+        for (const obj of this.gravures) {
             const id = parseInt(obj.id);
             if (id > highestId) {
                 highestId = id;
             }
         }
         this.form.id = highestId+1
-        this.squelettes.push(this.form)
-        router.push('squelettes')
+        this.gravures.push(this.form)
+        router.push('gravures')
     }
   },
 }

@@ -7,6 +7,7 @@
           <v-layout row>
   
           <v-flex sm7>
+            <v-card>
             <v-data-table id="tab" :headers="headers" :items="this.vis" class="text-center"
               :footer-props="{
                 'items-per-page-text': 'nombre de lignes par pages',
@@ -15,8 +16,8 @@
               }">
               <template slot="item" slot-scope="row">
                 <tr>
-                  <td>{{ row.item.ref }}</td>
-                  <td>{{ row.item.nom }}</td>
+                  <td class="text-left">{{ row.item.ref }}</td>
+                  <td class="text-left">{{ row.item.nom }}</td>
                   <td>
                     <v-btn icon outlined @click="setVisModif(row.item)">
                       <v-icon>mdi-dots-horizontal</v-icon>
@@ -28,6 +29,8 @@
                 </tr>
               </template>
             </v-data-table>
+            </v-card>
+            <br>
             <router-link to="ajoutVis">
               <v-btn>Ajouter</v-btn>
             </router-link>
@@ -49,6 +52,7 @@
                 <label><b>Image Arrière</b></label>
                 <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
                 <v-img v-bind:src=form.imagearriere></v-img>
+                <br>
                 <v-btn color='green' @click="submitForm">Modifier</v-btn>
               </div>
             </v-card>

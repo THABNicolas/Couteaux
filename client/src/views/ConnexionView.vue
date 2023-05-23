@@ -54,7 +54,7 @@ export default {
             this.setMessageCo(rep.data.message);
             if (rep.data.utilisateur){
               this.setUserConnected(rep.data.utilisateur);
-              this.$cookie.set('userAuthentificated', JSON.stringify(rep.data.utilisateur), {expires:'3599s'});
+              this.$cookie.set('userAuthentificated', JSON.stringify(rep.data.utilisateur), {expires:'10000s'});
               this.setNav(false);
               this.$router.push('/');
             }

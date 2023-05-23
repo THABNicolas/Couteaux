@@ -7,6 +7,7 @@
         <v-layout row>
 
         <v-flex sm7>
+          <v-card elevation='4'>
           <v-data-table id="tab" :headers="headers" :items="this.squelettes" class="text-center"
             :footer-props="{
               'items-per-page-text': 'nombre de lignes par pages',
@@ -15,8 +16,8 @@
             }">
             <template slot="item" slot-scope="row">
               <tr>
-                <td>{{ row.item.ref }}</td>
-                <td>{{ row.item.nom }}</td>
+                <td class="text-left">{{ row.item.ref }}</td>
+                <td class="text-left">{{ row.item.nom }}</td>
                 <td>
                   <v-btn icon outlined @click="setSqueletteModif(row.item)">
                     <v-icon>mdi-dots-horizontal</v-icon>
@@ -28,6 +29,8 @@
               </tr>
             </template>
           </v-data-table>
+          </v-card>
+          <br>
           <router-link to="ajoutSquelette">
             <v-btn>Ajouter</v-btn>
           </router-link>
@@ -55,22 +58,22 @@
                       <v-flex>
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Prix</b></label></v-flex>
-                          <v-flex><v-text-field type='text' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>
+                          <v-flex><v-text-field type='number' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>
                         </v-layout>
                       </v-flex>
                     </v-layout>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Catégorie</b></label></v-flex>
                           <v-flex><v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field></v-flex>
                         </v-layout>
                       </v-flex>
-                      <v-flex>
+                      <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Vis</b></label></v-flex>
-                          <v-flex><v-text-field type='text' id='vis' v-model="form.vis" required class="wider-text-field"></v-text-field></v-flex>
+                          <v-flex><v-select id="vis" :items="vis" v-model="form.vis" item-value="ref" item-text="nom" required></v-select></v-flex>
                         </v-layout>  
                       </v-flex>
                     </v-layout>
@@ -79,10 +82,10 @@
                     <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Gravure</b></label></v-flex>
-                          <v-flex><v-text-field type='text' id='gravure' v-model="form.gravure" required class="wider-text-field"></v-text-field></v-flex>
+                          <v-flex><v-select id="gravure" :items="gravures" v-model="form.gravure" required></v-select></v-flex>
                         </v-layout>
                       </v-flex>
                       <v-flex>
@@ -97,10 +100,12 @@
                     <v-text-field type='text' id='imageavant' v-model="form.imageavant" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.imageavant></v-img>
                     <br>
+
                     <label><b>Image Arrière</b></label>
                     <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.imagearriere></v-img>
                     <br>
+                    
                     <v-btn color='green' @click="submitForm">Modifier</v-btn>
            
                     
@@ -154,10 +159,15 @@ data () {
     errorForm: '',
     formRef: '',
     formNom: '',
+    gravures: [
+      'LF',
+      'LC'
+    ]
   }
 },
 computed: {
-  ...mapState(['squelettes'])
+  ...mapState(['squelettes']),
+  ...mapState(['vis'])
 },
 methods: {
   ...mapMutations(['setSquelettes']),
@@ -214,6 +224,7 @@ methods: {
           id: this.form.id
         };
         this.setSquelettes(updatedSquelettes);
+        console.log(this.squelettes)
       }
     }
   }
@@ -242,7 +253,7 @@ input {
   width:100%;
 }
 label{
-  margin-bottom: -12px;
+  margin-bottom: -13px;
 }
 
 </style>
