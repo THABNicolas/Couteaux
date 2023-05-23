@@ -20,6 +20,7 @@ export default new Vuex.Store({
     squelettes: [],
     plaquettes: [],
     materiaux: [],
+    vis: [],
     gravures: []
   }),
   mutations: {
@@ -47,20 +48,24 @@ export default new Vuex.Store({
     setCouteauModif(state, couteau){
       state.couteauModif = couteau;
     },
-    setVis(state, vis){
-        state.vis = vis;
-    },
     setSquelettes(state, squelettes){
-        state.squelettes = squelettes;
+        state.squelettes = squelettes.sort(sortRank);
     },
     setPlaquettes(state, plaquettes){
-        state.plaquettes = plaquettes;
+        state.plaquettes = plaquettes.sort(sortRank);
     },
     setMateriaux(state, materiaux){
         state.materiaux = materiaux;
+    },
+    setVis(state, vis){
+      state.vis = vis;
     },
     setGravures(state, gravures){
         state.gravures = gravures;
     },
   }
 })
+
+function sortRank(p1,p2){
+  return p1.rang - p2.rang;
+}

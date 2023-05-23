@@ -7,15 +7,28 @@
         <v-layout row>
 
         <v-flex sm7>
+          <v-layout row>
+            <v-flex sm5>
+              <v-text-field style="margin-left: 14px;"
+                label="nom" v-model="search" clearable @input="handleClear">
+              </v-text-field>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex sm3>
+              <router-link to="ajoutSquelette">
+                <v-btn style="margin-top: 14px;margin-left:24px;">Ajouter</v-btn>
+              </router-link>
+            </v-flex>
+          </v-layout>
           <v-card elevation='4'>
-          <v-data-table id="tab" :headers="headers" :items="this.squelettes" class="text-center"
+          <v-data-table id="tab" :headers="headers" :items="filterSearch" class="text-center"
             :footer-props="{
               'items-per-page-text': 'nombre de lignes par pages',
               'items-per-page-options': [5, 10, 15],
               'show-current-page': true,
             }">
             <template slot="item" slot-scope="row">
-              <tr>
+              <tr :class="{ 'highlight': row.item === squeletteModif }">
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
                 <td>
@@ -30,10 +43,6 @@
             </template>
           </v-data-table>
           </v-card>
-          <br>
-          <router-link to="ajoutSquelette">
-            <v-btn>Ajouter</v-btn>
-          </router-link>
         </v-flex>
 
         <v-flex sm5>
@@ -80,6 +89,9 @@
 
                     <label><b>Description</b></label>
                     <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
+
+                    <label><b>Rang</b></label>
+                    <v-text-field type='number' id='rang' v-model="form.rang" required class="wider-text-field"></v-text-field>
 
                     <v-layout row>
                       <v-flex style="width:50%">
@@ -152,6 +164,7 @@ data () {
       description: '',
       gravure: '',
       disponibilite: false,
+      rang: '',
       imageavant: '',
       imagearriere: '',
       id: ''
@@ -162,15 +175,26 @@ data () {
     gravures: [
       'LF',
       'LC'
-    ]
+    ],
+    search: ''
   }
 },
 computed: {
   ...mapState(['squelettes']),
-  ...mapState(['vis'])
+  ...mapState(['vis']),
+  filterSearch(){
+    let filter = []
+    filter = this.squelettes.filter(m => m.nom.includes(this.search));
+    return filter;
+  }
 },
 methods: {
   ...mapMutations(['setSquelettes']),
+  handleClear() {
+    if (this.search === null) {
+      this.search = '';
+    }
+  },
   drop(item){
     var idtodrop = item.id
     const index = this.squelettes.findIndex(obj => obj.id === idtodrop);
@@ -179,22 +203,25 @@ methods: {
     }
   },
   setSqueletteModif(item) {
-    this.squeletteModif = item;
-    this.formRef = item.ref;
-    this.formNom = item.nom;
-    this.form = {
-      ref: item.ref,
-      nom: item.nom,
-      prix: item.prix,
-      categorie: item.categorie,
-      vis: item.vis,
-      description: item.description,
-      gravure: item.gravure,
-      disponibilite: item.disponibilite,
-      imageavant: item.imageavant,
-      imagearriere: item.imagearriere,
-      id: item.id
-    };
+    if (item) {
+      this.squeletteModif = item;
+      this.formRef = item.ref;
+      this.formNom = item.nom;
+      this.form = {
+        ref: item.ref,
+        nom: item.nom,
+        prix: item.prix,
+        categorie: item.categorie,
+        vis: item.vis,
+        description: item.description,
+        gravure: item.gravure,
+        disponibilite: item.disponibilite,
+        rang: item.rang,
+        imageavant: item.imageavant,
+        imagearriere: item.imagearriere,
+        id: item.id
+      };
+    }
   },
   validateForm() {
     if (!this.formRef || !this.formNom || !this.form.prix || !this.form.categorie || !this.form.vis || !this.form.description || !this.form.gravure || !this.form.imageavant || !this.form.imagearriere) {
@@ -219,16 +246,19 @@ methods: {
           description: this.form.description,
           gravure: this.form.gravure,
           disponibilite: this.form.disponibilite,
+          rang: this.form.rang,
           imageavant: this.form.imageavant,
           imagearriere: this.form.imagearriere,
           id: this.form.id
         };
         this.setSquelettes(updatedSquelettes);
-        console.log(this.squelettes)
       }
     }
   }
-}
+},
+  beforeMount(){
+    this.setSqueletteModif(this.squelettes[0])
+  }
 }
 
 </script>
@@ -254,6 +284,9 @@ input {
 }
 label{
   margin-bottom: -13px;
+}
+.highlight {
+  background-color: rgb(236, 236, 236);
 }
 
 </style>

@@ -7,15 +7,28 @@
         <v-layout row>
 
         <v-flex sm7>
+          <v-layout row>
+            <v-flex sm5>
+              <v-text-field style="margin-left: 14px;"
+                label="nom" v-model="search" clearable @input="handleClear">
+              </v-text-field>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex sm3>
+              <router-link to="ajoutMateriau">
+                <v-btn style="margin-top: 14px;margin-left:24px;">Ajouter</v-btn>
+              </router-link>
+            </v-flex>
+          </v-layout>
           <v-card elevation='4'>
-          <v-data-table id="tab" :headers="headers" :items="this.materiaux" class="text-center"
+          <v-data-table id="tab" :headers="headers" :items="filterSearch" class="text-center"
             :footer-props="{
               'items-per-page-text': 'nombre de lignes par pages',
               'items-per-page-options': [5, 10, 15],
               'show-current-page': true,
             }">
             <template slot="item" slot-scope="row">
-              <tr>
+              <tr :class="{ 'highlight': row.item === materiauModif }">
                 <td class="text-left">{{ row.item.type }}</td>
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
@@ -31,10 +44,6 @@
             </template>
           </v-data-table>
           </v-card>
-          <br>
-          <router-link to="ajoutMateriau">
-            <v-btn>Ajouter</v-btn>
-          </router-link>
         </v-flex>
 
         <v-flex sm5>
@@ -156,14 +165,25 @@ data () {
     },
     errorForm: '',
     formRef: '',
-    formNom: ''
+    formNom: '',
+    search: ''
   }
 },
 computed: {
-  ...mapState(['materiaux'])
+  ...mapState(['materiaux']),
+  filterSearch(){
+    let filter = []
+    filter = this.materiaux.filter(m => m.nom.includes(this.search));
+    return filter;
+  }
 },
 methods: {
   ...mapMutations(['setMateriaux']),
+  handleClear() {
+    if (this.search === null) {
+      this.search = '';
+    }
+  },
   drop(item){
     var idtodrop = item.id
     const index = this.materiaux.findIndex(obj => obj.id === idtodrop);
@@ -172,21 +192,23 @@ methods: {
     }
   },
   setMateriauModif(item) {
-    this.materiauModif = item;
-    this.formRef = item.ref;
-    this.formNom = item.nom;
-    this.form = {
-      nom: item.nom,
-      ref: item.ref,
-      categorie: item.categorie,
-      prix: item.prix,
-      rang: item.rang,
-      type: item.type,
-      matiere: item.matiere,
-      image: item.image,
-      imagearriere: item.imageArriere,
-      id: item.id
-    };
+    if (item) {
+      this.materiauModif = item;
+      this.formRef = item.ref;
+      this.formNom = item.nom;
+      this.form = {
+        nom: item.nom,
+        ref: item.ref,
+        categorie: item.categorie,
+        prix: item.prix,
+        rang: item.rang,
+        type: item.type,
+        matiere: item.matiere,
+        image: item.image,
+        imagearriere: item.imageArriere,
+        id: item.id
+      };
+    }
   },
   validateForm() {
     if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.prix || !this.form.rang || !this.form.type || !this.form.matiere || !this.form.image || !this.form.imagearriere) {
@@ -218,7 +240,10 @@ methods: {
       }
     }
   }
-}
+},
+  beforeMount(){
+    this.setMateriauModif(this.materiaux[0])
+  }
 }
 
 </script>
@@ -244,6 +269,9 @@ input {
 }
 label{
   margin-bottom: -13px;
+}
+.highlight {
+  background-color: rgb(236, 236, 236);
 }
 
 </style>

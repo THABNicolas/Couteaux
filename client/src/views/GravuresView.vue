@@ -7,15 +7,28 @@
           <v-layout row>
   
           <v-flex sm7>
+            <v-layout row>
+              <v-flex sm5>
+                <v-text-field style="margin-left: 14px;"
+                  label="nom" v-model="search" clearable @input="handleClear">
+                </v-text-field>
+              </v-flex>
+              <v-spacer></v-spacer>
+              <v-flex sm3>
+                <router-link to="ajoutGravure">
+                  <v-btn style="margin-top: 14px;margin-left:24px;">Ajouter</v-btn>
+                </router-link>
+              </v-flex>
+            </v-layout>
             <v-card elevation='4'>
-            <v-data-table id="tab" :headers="headers" :items="this.gravures" class="text-center"
+            <v-data-table id="tab" :headers="headers" :items="filterSearch" class="text-center"
               :footer-props="{
                 'items-per-page-text': 'nombre de lignes par pages',
                 'items-per-page-options': [5, 10, 15],
                 'show-current-page': true,
               }">
               <template slot="item" slot-scope="row">
-                <tr>
+                <tr :class="{ 'highlight': row.item === gravureModif }">
                   <td class="text-left">{{ row.item.ref }}</td>
                   <td class="text-left">{{ row.item.nom }}</td>
                   <td>
@@ -30,10 +43,6 @@
               </template>
             </v-data-table>
             </v-card>
-            <br>
-            <router-link to="ajoutGravure">
-              <v-btn>Ajouter</v-btn>
-            </router-link>
           </v-flex>
   
           <v-flex sm5>
@@ -43,8 +52,8 @@
   
                 <v-container grid-list-lg>
                   <v-layout column>
-  
-              
+
+
                       <label><b>Nom</b></label>
                       <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
   
@@ -155,15 +164,25 @@
       },
       errorForm: '',
       formRef: '',
-      formNom: ''
+      formNom: '',
+      search: ''
     }
   },
   computed: {
     ...mapState(['gravures']),
-    ...mapState(['vis'])
+    filterSearch(){
+      let filter = []
+      filter = this.gravures.filter(m => m.nom.includes(this.search));
+      return filter;
+    }
   },
   methods: {
     ...mapMutations(['setGravures']),
+    handleClear() {
+      if (this.search === null) {
+        this.search = '';
+      }
+    },
     drop(item){
       var idtodrop = item.id
       const index = this.gravures.findIndex(obj => obj.id === idtodrop);
@@ -172,22 +191,24 @@
       }
     },
     setGravureModif(item) {
-      this.gravureModif = item;
-      this.formRef = item.ref;
-      this.formNom = item.nom;
-      this.form = {
-        ref: item.ref,
-        nom: item.nom,
-        prix: item.prix,
-        categorie: item.categorie,
-        desc: item.desc,
-        description: item.description,
-        gravure: item.gravure,
-        disponibilite: item.disponibilite,
-        imageLF: item.imageLF,
-        imageLC: item.imageLC,
-        id: item.id
-      };
+      if (item) {
+        this.gravureModif = item;
+        this.formRef = item.ref;
+        this.formNom = item.nom;
+        this.form = {
+          ref: item.ref,
+          nom: item.nom,
+          prix: item.prix,
+          categorie: item.categorie,
+          desc: item.desc,
+          description: item.description,
+          gravure: item.gravure,
+          disponibilite: item.disponibilite,
+          imageLF: item.imageLF,
+          imageLC: item.imageLC,
+          id: item.id
+        };
+      }
     },
     validateForm() {
       if (!this.formRef || !this.formNom || !this.form.prix || !this.form.categorie || !this.form.desc || !this.form.description || !this.form.gravure || !this.form.imageLF || !this.form.imageLC) {
@@ -220,8 +241,11 @@
         }
       }
     }
+  },
+  beforeMount(){
+    this.setGravureModif(this.gravures[0])
   }
-  }
+}
   
   </script>
   
@@ -247,5 +271,8 @@
   label{
     margin-bottom: -13px;
   }
-  
+  .highlight {
+    background-color: rgb(236, 236, 236);
+  }
+
   </style>

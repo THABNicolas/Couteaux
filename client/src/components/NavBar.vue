@@ -25,7 +25,7 @@
 
           <v-list-item to="/couteaux" @click="expand(false)">
             <v-list-item-icon>
-              <v-icon>mdi-knife</v-icon>
+              <v-icon>mdi-knife-military</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>Couteaux</v-list-item-title>
@@ -45,7 +45,7 @@
             </template>
             <v-list-item to="/squelettes" @click="expand(false)">
               <v-list-item-icon>
-                <v-icon>mdi-circle-outline</v-icon>
+                <v-icon>mdi-knife</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>squelettes</v-list-item-title>
@@ -53,7 +53,7 @@
             </v-list-item>
             <v-list-item to="/plaquettes" @click="expand(false)">
               <v-list-item-icon>
-                <v-icon>mdi-circle-double</v-icon>
+                <v-icon>mdi-rectangle-outline</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>plaquettes</v-list-item-title>
@@ -61,7 +61,7 @@
             </v-list-item>
             <v-list-item to="/materiaux" @click="expand(false)">
               <v-list-item-icon>
-                <v-icon>mdi-circle-slice-8</v-icon>
+                <v-icon>mdi-shape-rectangle-plus</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>matériaux</v-list-item-title>
