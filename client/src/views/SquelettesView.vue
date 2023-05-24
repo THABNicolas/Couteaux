@@ -28,7 +28,7 @@
               'show-current-page': true,
             }">
             <template slot="item" slot-scope="row">
-              <tr :class="{ 'highlight': row.item === squeletteModif }">
+              <tr :class="{ 'highlight': row.item.id === (squeletteModif && squeletteModif.id) }">
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
                 <td>
@@ -54,6 +54,9 @@
                 <v-layout column>
 
             
+                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
+                    <br>
+
                     <label><b>Nom</b></label>
                     <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
 
@@ -116,9 +119,6 @@
                     <label><b>Image Arrière</b></label>
                     <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.imagearriere></v-img>
-                    <br>
-                    
-                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
            
                     
                 </v-layout>
@@ -234,9 +234,13 @@ methods: {
   submitForm() {
     if (this.validateForm()) {
       const targetid = this.form.id;
+      const indexRangChange = this.squelettes.findIndex(v => v.rang === parseInt(this.form.rang));
       const index = this.squelettes.findIndex(v => v.id === targetid);
       if (index !== -1) {
         const updatedSquelettes = [...this.squelettes];
+        if (indexRangChange !== -1){
+          updatedSquelettes[indexRangChange].rang = this.squelettes[index].rang;
+        }
         updatedSquelettes[index] = {
           ref: this.formRef,
           nom: this.formNom,
@@ -246,7 +250,7 @@ methods: {
           description: this.form.description,
           gravure: this.form.gravure,
           disponibilite: this.form.disponibilite,
-          rang: this.form.rang,
+          rang: parseInt(this.form.rang),
           imageavant: this.form.imageavant,
           imagearriere: this.form.imagearriere,
           id: this.form.id

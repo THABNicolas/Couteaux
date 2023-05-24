@@ -28,8 +28,10 @@
               'show-current-page': true,
             }">
             <template slot="item" slot-scope="row">
-              <tr :class="{ 'highlight': row.item === materiauModif }">
+              <tr :class="{ 'highlight': materiauModif && row.item.id === materiauModif.id }">
                 <td class="text-left">{{ row.item.type }}</td>
+                <td class="text-left">{{ row.item.categorie }}</td>
+                <td class="text-left">{{ row.item.rang }}</td>
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
                 <td>
@@ -55,6 +57,9 @@
                 <v-layout column>
 
             
+                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
+                    <br>
+
                     <label><b>Nom</b></label>
                     <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
 
@@ -111,9 +116,6 @@
                     <label><b>Image Arrière</b></label>
                     <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.imagearriere></v-img>
-                    <br>
-                    
-                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
            
                     
                 </v-layout>
@@ -145,6 +147,8 @@ data () {
   return {
     headers: [
       { text: 'type', value: 'type', sortable: true, align: 'center' },
+      { text: 'catégorie', value: 'categorie', sortable: true, align: 'center' },
+      { text: 'rang', value: 'rang', sortable: true, align: 'center' },
       { text: 'ref', value: 'ref', sortable: true, align: 'center' },
       { text: 'nom', value: 'nom', sortable: true, align: 'center' },
       { text: 'Modification', value: 'modification', sortable: false, align: 'center' },
@@ -221,15 +225,19 @@ methods: {
   submitForm() {
     if (this.validateForm()) {
       const targetid = this.form.id;
+      const indexRangChange = this.materiaux.findIndex(v => v.rang === parseInt(this.form.rang) && v.categorie === this.form.categorie && v.type === this.form.type);
       const index = this.materiaux.findIndex(v => v.id === targetid);
       if (index !== -1) {
         const updatedMateriaux = [...this.materiaux];
+        if (indexRangChange !== -1){
+          updatedMateriaux[indexRangChange].rang = this.materiaux[index].rang;
+        }
         updatedMateriaux[index] = {
           nom: this.formNom,
           ref: this.formRef,
           categorie: this.form.categorie,
           prix: this.form.prix,
-          rang: this.form.rang,
+          rang: parseInt(this.form.rang),
           type: this.form.type,
           matiere: this.form.matiere,
           image: this.form.image,

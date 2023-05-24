@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { mapState } from 'vuex'
 
 Vue.use(Vuex)
 
@@ -55,7 +55,7 @@ export default new Vuex.Store({
         state.plaquettes = plaquettes.sort(sortRank);
     },
     setMateriaux(state, materiaux){
-        state.materiaux = materiaux;
+        state.materiaux = materiaux.sort(sortMat(state.plaquettes));
     },
     setVis(state, vis){
       state.vis = vis;
@@ -63,9 +63,36 @@ export default new Vuex.Store({
     setGravures(state, gravures){
         state.gravures = gravures;
     },
+  },
+  computed:{
+    ...mapState(['plaquettes'])
   }
 })
 
 function sortRank(p1,p2){
   return p1.rang - p2.rang;
+}
+
+function sortMat(plaquettes){
+  return function(p1,p2){
+    // Priorité : type
+    const typePriorities = {};
+    plaquettes.forEach((plaquette) => {
+      typePriorities[plaquette.ref] = plaquette.rang;
+    });
+    const typePriority1 = typePriorities[p1.type];
+    const typePriority2 = typePriorities[p2.type];
+    if (typePriority1 !== typePriority2) {
+      return typePriority1 - typePriority2;
+    }
+    // Priorité : categorie
+    const categoriePriorities = { Métaux: 0, Bois: 1, Résine: 2, Carbone: 3, "": 4 };
+    const categoriePriority1 = categoriePriorities[p1.categorie];
+    const categoriePriority2 = categoriePriorities[p2.categorie];
+    if (categoriePriority1 !== categoriePriority2) {
+      return categoriePriority1 - categoriePriority2;
+    }
+    // Priorité : rang
+    return p1.rang - p2.rang;
+  }
 }

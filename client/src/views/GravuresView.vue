@@ -54,6 +54,9 @@
                   <v-layout column>
 
 
+                      <v-btn color='green' @click="submitForm">Modifier</v-btn>
+                      <br>
+
                       <label><b>Nom</b></label>
                       <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
   
@@ -110,9 +113,6 @@
                       <label><b>Image LC</b></label>
                       <v-text-field type='text' id='imageLC' v-model="form.imageLC" required class="wider-text-field"></v-text-field>
                       <v-img v-bind:src=form.imageLC></v-img>
-                      <br>
-                      
-                      <v-btn color='green' @click="submitForm">Modifier</v-btn>
              
                       
                   </v-layout>

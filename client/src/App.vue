@@ -27,7 +27,6 @@ export default {
     axios.get('https://cdn.shopify.com/s/files/1/0685/6458/2668/files/squelettes.json')
         .then((rep) => {
           this.setSquelettes(rep.data);
-          console.log(rep.data)
         })
     axios.get('https://cdn.shopify.com/s/files/1/0685/6458/2668/files/plaquettes.json')
         .then((rep) => {

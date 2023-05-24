@@ -49,6 +49,9 @@
             <v-alert v-if="errorForm" type="error">{{errorForm}}</v-alert>
             <v-card elevation='4' class='cardModification'>
               <div id='formModification' >
+                <v-btn color='green' @click="submitForm">Modifier</v-btn>
+                <br>
+                <br>
                 <label><b>Ref</b></label>
                 <v-text-field type="text" id="ref" v-model="formRef" required class="wider-text-field"></v-text-field>
                 <label><b>Nom</b></label>
@@ -61,8 +64,6 @@
                 <label><b>Image Arrière</b></label>
                 <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
                 <v-img v-bind:src=form.imagearriere></v-img>
-                <br>
-                <v-btn color='green' @click="submitForm">Modifier</v-btn>
               </div>
             </v-card>
           </v-flex>

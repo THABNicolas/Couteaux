@@ -28,7 +28,7 @@
               'show-current-page': true,
             }">
             <template slot="item" slot-scope="row">
-              <tr :class="{ 'highlight': row.item === plaquetteModif }">
+              <tr :class="{ 'highlight': plaquetteModif && row.item.id === plaquetteModif.id }">
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
                 <td>
@@ -54,6 +54,9 @@
                 <v-layout column>
 
             
+                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
+                    <br>
+
                     <label><b>Nom</b></label>
                     <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
 
@@ -93,9 +96,6 @@
                     <label><b>Image</b></label>
                     <v-text-field type='text' id='image' v-model="form.image" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.image></v-img>
-                    <br>
-                    
-                    <v-btn color='green' @click="submitForm">Modifier</v-btn>
            
                     
                 </v-layout>
@@ -149,7 +149,7 @@ data () {
   }
 },
 computed: {
-  ...mapState(['plaquettes']),
+  ...mapState(['plaquettes','materiaux']),
   filterSearch(){
     let filter = []
     filter = this.plaquettes.filter(m => m.nom.includes(this.search));
@@ -157,7 +157,7 @@ computed: {
   }
 },
 methods: {
-  ...mapMutations(['setPlaquettes']),
+  ...mapMutations(['setPlaquettes','setMateriaux']),
   handleClear() {
     if (this.search === null) {
       this.search = '';
@@ -188,7 +188,7 @@ methods: {
     }
   },
   validateForm() {
-    if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.description || !this.form.image) {
+    if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.image) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }
@@ -198,20 +198,25 @@ methods: {
   submitForm() {
     if (this.validateForm()) {
       const targetid = this.form.id;
+      const indexRangChange = this.plaquettes.findIndex(v => v.rang === parseInt(this.form.rang));
       const index = this.plaquettes.findIndex(v => v.id === targetid);
       if (index !== -1) {
         const updatedPlaquettes = [...this.plaquettes];
+        if (indexRangChange !== -1){
+          updatedPlaquettes[indexRangChange].rang = this.plaquettes[index].rang;
+        }
         updatedPlaquettes[index] = {
           ref: this.formRef,
           nom: this.formNom,
           categorie: this.form.categorie,
           description: this.form.description,
           disponibilite: this.form.disponibilite,
-          rang: this.form.rang,
+          rang: parseInt(this.form.rang),
           image: this.form.image,
           id: this.form.id
         };
         this.setPlaquettes(updatedPlaquettes);
+        this.setMateriaux(this.materiaux);
       }
     }
   }
