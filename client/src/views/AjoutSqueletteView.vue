@@ -79,6 +79,10 @@ methods: {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }
+    if (this.squelettes.some(obj => obj.ref === this.form.ref)) {
+      this.errorForm = "Valeur de référence déja présente";
+      return false;
+    }
     this.errorForm="";
     return true;
   },
@@ -92,6 +96,14 @@ methods: {
             }
         }
         this.form.id = highestId+1
+        let plusHauteValeur = 0;
+        for (const obj of this.squelettes) {
+            const r = parseInt(obj.rang);
+            if (r > plusHauteValeur) {
+                plusHauteValeur = r;
+            }
+        }
+        this.form.rang = plusHauteValeur+1
         this.squelettes.push(this.form)
         router.push('squelettes')
     }

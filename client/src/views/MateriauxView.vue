@@ -31,7 +31,6 @@
               <tr :class="{ 'highlight': materiauModif && row.item.id === materiauModif.id }">
                 <td class="text-left">{{ row.item.type }}</td>
                 <td class="text-left">{{ row.item.categorie }}</td>
-                <td class="text-left">{{ row.item.rang }}</td>
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
                 <td>
@@ -46,6 +45,7 @@
             </template>
           </v-data-table>
           </v-card>
+          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
         </v-flex>
 
         <v-flex sm5>
@@ -94,10 +94,10 @@
                     </v-layout>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Type</b></label></v-flex>
-                          <v-flex><v-text-field type="text" id="type" v-model="form.type" required class="wider-text-field"></v-text-field></v-flex>  
+                          <v-flex><v-select id="type" :items="plaquettes" v-model="form.type" item-value="ref" item-text="ref" required></v-select></v-flex>  
                         </v-layout>
                       </v-flex>
                       <v-flex style="width:50%">
@@ -114,8 +114,8 @@
                     <br>
 
                     <label><b>Image Arrière</b></label>
-                    <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
-                    <v-img v-bind:src=form.imagearriere></v-img>
+                    <v-text-field type='text' id='imageArriere' v-model="form.imageArriere" required class="wider-text-field"></v-text-field>
+                    <v-img v-bind:src=form.imageArriere></v-img>
            
                     
                 </v-layout>
@@ -148,7 +148,6 @@ data () {
     headers: [
       { text: 'type', value: 'type', sortable: true, align: 'center' },
       { text: 'catégorie', value: 'categorie', sortable: true, align: 'center' },
-      { text: 'rang', value: 'rang', sortable: true, align: 'center' },
       { text: 'ref', value: 'ref', sortable: true, align: 'center' },
       { text: 'nom', value: 'nom', sortable: true, align: 'center' },
       { text: 'Modification', value: 'modification', sortable: false, align: 'center' },
@@ -164,7 +163,7 @@ data () {
       type: '',
       matiere: '',
       image: '',
-      imagearriere: '',
+      imageArriere: '',
       id: ''
     },
     errorForm: '',
@@ -174,7 +173,7 @@ data () {
   }
 },
 computed: {
-  ...mapState(['materiaux']),
+  ...mapState(['materiaux','plaquettes']),
   filterSearch(){
     let filter = []
     filter = this.materiaux.filter(m => m.nom.includes(this.search));
@@ -183,6 +182,19 @@ computed: {
 },
 methods: {
   ...mapMutations(['setMateriaux']),
+  downloadFile(content, fileName) {
+    const element = document.createElement('a');
+    const file = new Blob([content], { type: 'application/json' });
+    element.href = URL.createObjectURL(file);
+    element.download = fileName;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  },
+  generateJSONFile() {
+    const jsonString = JSON.stringify(this.materiaux);
+    this.downloadFile(jsonString,'plaquettesmatieres.json');
+  },
   handleClear() {
     if (this.search === null) {
       this.search = '';
@@ -209,14 +221,18 @@ methods: {
         type: item.type,
         matiere: item.matiere,
         image: item.image,
-        imagearriere: item.imageArriere,
+        imageArriere: item.imageArriere,
         id: item.id
       };
     }
   },
   validateForm() {
-    if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.prix || !this.form.rang || !this.form.type || !this.form.matiere || !this.form.image || !this.form.imagearriere) {
+    if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.prix || !this.form.rang || !this.form.type || !this.form.matiere) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
+      return false;
+    }
+    if (this.materiaux.some(obj => obj.ref === this.formRef) && this.formRef !== this.materiauModif.ref) {
+      this.errorForm = "Valeur de référence déja présente";
       return false;
     }
     this.errorForm = '';
@@ -241,10 +257,11 @@ methods: {
           type: this.form.type,
           matiere: this.form.matiere,
           image: this.form.image,
-          imagearriere: this.form.imagearriere,
+          imageArriere: this.form.imageArriere,
           id: this.form.id
         };
         this.setMateriaux(updatedMateriaux);
+        this.setMateriauModif(updatedMateriaux[index]);
       }
     }
   }

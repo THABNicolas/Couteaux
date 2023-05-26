@@ -43,6 +43,7 @@
             </template>
           </v-data-table>
           </v-card>
+          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
         </v-flex>
 
         <v-flex sm5>
@@ -158,6 +159,19 @@ computed: {
 },
 methods: {
   ...mapMutations(['setPlaquettes','setMateriaux']),
+  downloadFile(content, fileName) {
+    const element = document.createElement('a');
+    const file = new Blob([content], { type: 'application/json' });
+    element.href = URL.createObjectURL(file);
+    element.download = fileName;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  },
+  generateJSONFile() {
+    const jsonString = JSON.stringify(this.plaquettes);
+    this.downloadFile(jsonString,'plaquettes.json');
+  },
   handleClear() {
     if (this.search === null) {
       this.search = '';
@@ -192,6 +206,10 @@ methods: {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }
+    if (this.plaquettes.some(obj => obj.ref === this.formRef) && this.formRef !== this.plaquetteModif.ref) {
+      this.errorForm = "Valeur de référence déja présente";
+      return false;
+    }
     this.errorForm = '';
     return true;
   },
@@ -217,6 +235,7 @@ methods: {
         };
         this.setPlaquettes(updatedPlaquettes);
         this.setMateriaux(this.materiaux);
+        this.setPlaquetteModif(updatedPlaquettes[index]);
       }
     }
   }

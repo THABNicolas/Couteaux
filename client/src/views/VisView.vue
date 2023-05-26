@@ -28,7 +28,7 @@
                 'show-current-page': true,
               }">
               <template slot="item" slot-scope="row">
-                <tr :class="{ 'highlight': row.item === visModif }">
+                <tr :class="{ 'highlight': visModif && row.item.id === visModif.id }">
                   <td class="text-left">{{ row.item.ref }}</td>
                   <td class="text-left">{{ row.item.nom }}</td>
                   <td>
@@ -43,6 +43,7 @@
               </template>
             </v-data-table>
             </v-card>
+            <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
           </v-flex>
 
           <v-flex sm5>
@@ -119,6 +120,19 @@ export default{
   },
   methods: {
     ...mapMutations(['setVis']),
+    downloadFile(content, fileName) {
+      const element = document.createElement('a');
+      const file = new Blob([content], { type: 'application/json' });
+      element.href = URL.createObjectURL(file);
+      element.download = fileName;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    },
+    generateJSONFile() {
+      const jsonString = JSON.stringify(this.vis);
+      this.downloadFile(jsonString,'vis.json');
+    },
     handleClear() {
       if (this.search === null) {
         this.search = '';
@@ -151,6 +165,10 @@ export default{
         this.errorForm = "Veuillez remplir tous les champs obligatoires";
         return false;
       }
+      if (this.vis.some(obj => obj.ref === this.formRef) && this.formRef !== this.visModif.ref) {
+        this.errorForm = "Valeur de référence déja présente";
+        return false;
+      }
       this.errorForm = '';
       return true;
     },
@@ -169,6 +187,7 @@ export default{
             id: this.form.id
           };
           this.setVis(updatedVis);
+          this.setVisModif(updatedVis[index]);
         }
       }
     }

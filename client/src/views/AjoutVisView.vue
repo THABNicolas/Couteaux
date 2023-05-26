@@ -59,6 +59,10 @@ methods: {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }
+    if (this.vis.some(obj => obj.ref === this.form.ref)) {
+      this.errorForm = "Valeur de référence déja présente";
+      return false;
+    }
     this.errorForm="";
     return true;
   },
