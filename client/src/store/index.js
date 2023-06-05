@@ -80,17 +80,13 @@ function sortMat(plaquettes){
     plaquettes.forEach((plaquette) => {
       typePriorities[plaquette.ref] = plaquette.rang;
     });
-    const typePriority1 = typePriorities[p1.type];
-    const typePriority2 = typePriorities[p2.type];
-    if (typePriority1 !== typePriority2) {
-      return typePriority1 - typePriority2;
+    if (typePriorities[p1.type] !== typePriorities[p2.type]) {
+      return typePriorities[p1.type] - typePriorities[p2.type];
     }
     // Priorité : categorie
     const categoriePriorities = { Métaux: 0, Bois: 1, Résine: 2, Carbone: 3, "": 4 };
-    const categoriePriority1 = categoriePriorities[p1.categorie];
-    const categoriePriority2 = categoriePriorities[p2.categorie];
-    if (categoriePriority1 !== categoriePriority2) {
-      return categoriePriority1 - categoriePriority2;
+    if (categoriePriorities[p1.categorie] !== categoriePriorities[p2.categorie]) {
+      return categoriePriorities[p1.categorie] - categoriePriorities[p2.categorie];
     }
     // Priorité : rang
     return p1.rang - p2.rang;

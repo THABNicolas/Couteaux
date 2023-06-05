@@ -45,7 +45,7 @@
             </template>
           </v-data-table>
           </v-card>
-          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
+          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">TELECHARGER</v-btn>
         </v-flex>
 
         <v-flex sm5>
