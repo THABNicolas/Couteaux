@@ -273,8 +273,8 @@ methods: {
           imagearriere: this.form.imagearriere,
           id: this.form.id
         };
-        this.setSquelettes(updatedSquelettes);
         this.setSqueletteModif(updatedSquelettes[index]);
+        this.setSquelettes(updatedSquelettes);
       }
     }
   }

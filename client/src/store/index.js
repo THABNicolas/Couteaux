@@ -61,7 +61,7 @@ export default new Vuex.Store({
       state.vis = vis;
     },
     setGravures(state, gravures){
-        state.gravures = gravures;
+        state.gravures = gravures.sort(sortRank);
     },
   },
   computed:{

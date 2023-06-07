@@ -45,7 +45,7 @@
             </template>
           </v-data-table>
           </v-card>
-          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">TELECHARGER</v-btn>
+          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">Télécharger</v-btn>
         </v-flex>
 
         <v-flex sm5>
@@ -108,6 +108,10 @@
                       </v-flex>
                     </v-layout>
 
+                    <v-flex style="margin-bottom: -25px;align-self: center;"><label><b>Disponibilité</b></label></v-flex>
+                    <v-flex style="align-self: center;"><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
+                    <br>
+
                     <label><b>Image</b></label>
                     <v-text-field type='text' id='image' v-model="form.image" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.image></v-img>
@@ -162,6 +166,7 @@ data () {
       rang: '',
       type: '',
       matiere: '',
+      disponibilite: '',
       image: '',
       imageArriere: '',
       id: ''
@@ -220,6 +225,7 @@ methods: {
         rang: item.rang,
         type: item.type,
         matiere: item.matiere,
+        disponibilite: item.disponibilite,
         image: item.image,
         imageArriere: item.imageArriere,
         id: item.id
@@ -256,12 +262,13 @@ methods: {
           rang: parseInt(this.form.rang),
           type: this.form.type,
           matiere: this.form.matiere,
+          disponibilite: this.form.disponibilite,
           image: this.form.image,
           imageArriere: this.form.imageArriere,
           id: this.form.id
         };
-        this.setMateriaux(updatedMateriaux);
         this.setMateriauModif(updatedMateriaux[index]);
+        this.setMateriaux(updatedMateriaux);
       }
     }
   }

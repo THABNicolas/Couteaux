@@ -43,7 +43,7 @@
               </template>
             </v-data-table>
             </v-card>
-            <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
+            <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">Télécharger</v-btn>
           </v-flex>
 
           <v-flex sm5>
@@ -186,8 +186,8 @@ export default{
             imagearriere: this.form.imagearriere,
             id: this.form.id
           };
-          this.setVis(updatedVis);
           this.setVisModif(updatedVis[index]);
+          this.setVis(updatedVis);
         }
       }
     }

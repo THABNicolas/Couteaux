@@ -43,7 +43,7 @@
             </template>
           </v-data-table>
           </v-card>
-          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
+          <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">Télécharger</v-btn>
         </v-flex>
 
         <v-flex sm5>
@@ -233,9 +233,9 @@ methods: {
           image: this.form.image,
           id: this.form.id
         };
+        this.setPlaquetteModif(updatedPlaquettes[index]);
         this.setPlaquettes(updatedPlaquettes);
         this.setMateriaux(this.materiaux);
-        this.setPlaquetteModif(updatedPlaquettes[index]);
       }
     }
   }

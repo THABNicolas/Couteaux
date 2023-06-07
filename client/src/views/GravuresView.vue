@@ -43,7 +43,7 @@
               </template>
             </v-data-table>
             </v-card>
-            <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">JSON</v-btn>
+            <v-btn style="margin-top: 14px;margin-left:24px;"  @click="generateJSONFile">Télécharger</v-btn>
           </v-flex>
   
           <v-flex sm5>
@@ -87,6 +87,12 @@
                           <v-layout column>
                             <v-flex style="margin-bottom: -25px;"><label><b>Catégorie</b></label></v-flex>
                             <v-flex><v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field></v-flex>
+                          </v-layout>
+                        </v-flex>
+                        <v-flex style="width:50%">
+                          <v-layout column>
+                            <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
+                            <v-flex><v-text-field type='text' id='rang' v-model="form.rang" required class="wider-text-field"></v-text-field></v-flex>
                           </v-layout>
                         </v-flex>
                       </v-layout>
@@ -159,6 +165,7 @@
         description: '',
         gravure: '',
         disponibilite: false,
+        rang: '',
         imageLF: '',
         imageLC: '',
         id: ''
@@ -218,6 +225,7 @@
           description: item.description,
           gravure: item.gravure,
           disponibilite: item.disponibilite,
+          rang: item.rang,
           imageLF: item.imageLF,
           imageLC: item.imageLC,
           id: item.id
@@ -239,9 +247,13 @@
     submitForm() {
       if (this.validateForm()) {
         const targetid = this.form.id;
+        const indexRangChange = this.gravures.findIndex(v => v.rang === parseInt(this.form.rang));
         const index = this.gravures.findIndex(v => v.id === targetid);
         if (index !== -1) {
           const updatedGravures = [...this.gravures];
+          if (indexRangChange !== -1){
+            updatedGravures[indexRangChange].rang = this.gravures[index].rang;
+          }
           updatedGravures[index] = {
             ref: this.formRef,
             nom: this.formNom,
@@ -251,12 +263,13 @@
             description: this.form.description,
             gravure: this.form.gravure,
             disponibilite: this.form.disponibilite,
+            rang: parseInt(this.form.rang),
             imageLF: this.form.imageLF,
             imageLC: this.form.imageLC,
             id: this.form.id
           };
-          this.setGravures(updatedGravures);
           this.setGravureModif(updatedGravures[index]);
+          this.setGravures(updatedGravures);
         }
       }
     }
