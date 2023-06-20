@@ -62,13 +62,13 @@
                       <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
   
                       <v-layout row>
-                        <v-flex>
+                        <v-flex style="width: 50%;">
                           <v-layout column>
                             <v-flex style="margin-bottom: -25px;"><label><b>Ref</b></label></v-flex>
                             <v-flex><v-text-field type="text" id="ref" v-model="formRef" required class="wider-text-field"></v-text-field></v-flex>  
                           </v-layout>
                         </v-flex>
-                        <v-flex>
+                        <v-flex style="width: 50%;">
                           <v-layout column>
                             <v-flex style="margin-bottom: -25px;"><label><b>Prix</b></label></v-flex>
                             <v-flex><v-text-field type='number' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>
@@ -104,10 +104,10 @@
                             <v-flex><v-text-field type='text' id='gravure' v-model="form.gravure" required class="wider-text-field"></v-text-field></v-flex>
                           </v-layout>
                         </v-flex>
-                        <v-flex>
+                        <v-flex style="width: 50%;">
                           <v-layout column>
-                            <v-flex style="margin-bottom: -25px;"><label><b>Disponibilité</b></label></v-flex>
-                            <v-flex><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
+                            <v-flex style="margin-bottom: -25px;align-self: center;"><label><b>Disponibilité</b></label></v-flex>
+                            <v-flex style="align-self: center;"><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
                           </v-layout>
                         </v-flex>
                       </v-layout>
@@ -233,7 +233,7 @@
       }
     },
     validateForm() {
-      if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.desc || !this.form.description || !this.form.gravure || !this.form.imageLF || !this.form.imageLC) {
+      if (!this.formRef) {
         this.errorForm = "Veuillez remplir tous les champs obligatoires";
         return false;
       }

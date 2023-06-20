@@ -1,22 +1,22 @@
+# Choose the Image which has Node installed already
 FROM node:lts-alpine
 
-# Installe un simple serveur http pour servir un contenu statique
+# install simple http server for serving static content
 RUN npm install -g http-server
 
-# Définit le dossier de travail à l'intérieur de l'image
-WORKDIR /app
+# make the 'app' folder the current working directory
+WORKDIR /app/dist
 
-# Copie les fichiers de configuration pour l'installation des dépendances
+# copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
-COPY package-lock.json ./
 
-# Installe les dépendances du projet
+# install project dependencies
 RUN npm install
 
-# Copie les fichiers et dossiers de votre projet dans l'image
+# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-# Construit l'application pour la production en la minifiant
+# build app for production with minification
 RUN npm run build
 
 EXPOSE 8080

@@ -2,12 +2,23 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   configureWebpack: { 
 		output: { 
-			globalObject: 'this', 
+			globalObject: 'this'
 		}, 
 	},
   transpileDependencies: [
     'vuetify'
-  ],
-  publicPath: ''
+  ]
+})
+
+const { DefinePlugin } = require('webpack');
+module.exports = {
+  configureWebpack: {
+    plugins: [
+      new DefinePlugin({
+        'process.env': {
+          'WEBPACK_CHUNK_NAME': JSON.stringify('client')
+        }
+      })
+    ]
   }
-)
+};

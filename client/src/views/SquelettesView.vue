@@ -62,13 +62,13 @@
                     <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Ref</b></label></v-flex>
                           <v-flex><v-text-field type="text" id="ref" v-model="formRef" required class="wider-text-field"></v-text-field></v-flex>  
                         </v-layout>
                       </v-flex>
-                      <v-flex>
+                      <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Prix</b></label></v-flex>
                           <v-flex><v-text-field type='number' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>
@@ -94,20 +94,17 @@
                     <label><b>Description</b></label>
                     <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
 
-                    <label><b>Rang</b></label>
-                    <v-text-field type='number' id='rang' v-model="form.rang" required class="wider-text-field"></v-text-field>
-
                     <v-layout row>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
+                          <v-flex><v-text-field type='number' id="rang" v-model="form.rang" required></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
                       <v-flex style="width:50%">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Gravure</b></label></v-flex>
                           <v-flex><v-select id="gravure" :items="gravures" v-model="form.gravure" required></v-select></v-flex>
-                        </v-layout>
-                      </v-flex>
-                      <v-flex>
-                        <v-layout column>
-                          <v-flex style="margin-bottom: -25px;"><label><b>Disponibilité</b></label></v-flex>
-                          <v-flex><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
                         </v-layout>
                       </v-flex>
                     </v-layout>
@@ -120,7 +117,11 @@
                     <label><b>Image Arrière</b></label>
                     <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.imagearriere></v-img>
-           
+
+                    <br>
+                    <label style="align-self: center;"><b>Disponibilité</b></label>
+                    <br>
+                    <input type='checkbox' id='disponibilite' v-model="form.disponibilite" style="align-self: center;">
                     
                 </v-layout>
               </v-container>
@@ -200,11 +201,11 @@ methods: {
     element.click();
     document.body.removeChild(element);
   },
-  generateJSONFile() {
+  generateJSONFile(){
     const jsonString = JSON.stringify(this.squelettes);
     this.downloadFile(jsonString,'squelettes.json');
   },
-  handleClear() {
+  handleClear(){
     if (this.search === null) {
       this.search = '';
     }
@@ -238,7 +239,7 @@ methods: {
     }
   },
   validateForm() {
-    if (!this.formRef || !this.formNom || !this.form.prix || !this.form.categorie || !this.form.vis || !this.form.description || !this.form.gravure || !this.form.imageavant || !this.form.imagearriere) {
+    if (!this.formRef) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }

@@ -50,7 +50,7 @@
             <v-alert v-if="errorForm" type="error">{{errorForm}}</v-alert>
             <v-card elevation='4' class='cardModification'>
               <div id='formModification' >
-                <v-btn color='green' @click="submitForm">Modifier</v-btn>
+                <v-btn style="width: 100%;" color='green' @click="submitForm">Modifier</v-btn>
                 <br>
                 <br>
                 <label><b>Ref</b></label>
@@ -161,7 +161,7 @@ export default{
       }
     },
     validateForm() {
-      if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.imageavant || !this.form.imagearriere) {
+      if (!this.formRef) {
         this.errorForm = "Veuillez remplir tous les champs obligatoires";
         return false;
       }

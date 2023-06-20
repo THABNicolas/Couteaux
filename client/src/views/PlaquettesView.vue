@@ -62,13 +62,13 @@
                     <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width: 50%;">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Ref</b></label></v-flex>
                           <v-flex><v-text-field type="text" id="ref" v-model="formRef" required class="wider-text-field"></v-text-field></v-flex>  
                         </v-layout>
                       </v-flex>
-                      <v-flex>
+                      <v-flex style="width: 50%;">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Catégorie</b></label></v-flex>
                           <v-flex><v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field></v-flex>
@@ -80,16 +80,16 @@
                     <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width: 50%;">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
                           <v-flex><v-text-field type="number" id="rang" v-model="form.rang" required class="wider-text-field"></v-text-field></v-flex>  
                         </v-layout>
                       </v-flex>
-                      <v-flex>
+                      <v-flex style="width: 50%;">
                         <v-layout column>
-                          <v-flex style="margin-bottom: -25px;"><label><b>Disponibilité</b></label></v-flex>
-                          <v-flex><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
+                          <v-flex style="margin-bottom: -25px;align-self: center;"><label><b>Disponibilité</b></label></v-flex>
+                          <v-flex style="align-self: center;"><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
                         </v-layout>
                       </v-flex>
                     </v-layout>
@@ -202,7 +202,7 @@ methods: {
     }
   },
   validateForm() {
-    if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.image) {
+    if (!this.formRef) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }

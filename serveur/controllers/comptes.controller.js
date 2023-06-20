@@ -1,5 +1,5 @@
 import {getAllAccounts,createAccount,updateAccount,getAllCouteaux,updateCouteau} from '../services/comptes.service.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const authentification = (req, res) => {
     let identifiant = req.body.identifiant;

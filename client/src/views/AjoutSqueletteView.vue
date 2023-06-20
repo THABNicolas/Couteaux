@@ -2,35 +2,87 @@
   
     <div id='inscription'>
       <br><br>
-      <div style="width:55%">
+      <div style="width:35%">
         <v-alert v-if="errorForm" type="error">{{errorForm}}</v-alert>
-        <v-card elevation='4' class='cardInscription'>
-          <div id='formInscription' >
-            <label><b>Ref</b></label>
-            <v-text-field type='text' id='ref' v-model="form.ref" required class="wider-text-field"></v-text-field>
-            <label><b>Nom</b></label>
-            <v-text-field type='text' id='nom' v-model="form.nom" required class="wider-text-field"></v-text-field>
-            <label><b>Prix</b></label>
-            <v-text-field type='number' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field>
-            <label><b>Catégorie</b></label>
-            <v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field>
-            <label><b>Vis</b></label>
-            <v-select id="vis" v-model="form.vis" :items="vis" item-value="ref" item-text="nom" required></v-select>
-            <label><b>Description</b></label>
-            <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
-            <label><b>Gravure</b></label>
-            <v-select id="gravure" :items="gravures" v-model="form.gravure" required></v-select>
-            <label><b>Disponibilite</b></label>
-            <br>
-            <input type='checkbox' id='disponibilite' v-model="form.disponibilite">
-            <br>
-            <label><b>Image Avant</b></label>
-            <v-text-field type='text' id='imageavant' v-model="form.imageavant" required class="wider-text-field"></v-text-field>
-            <label><b>Image Arrière</b></label>
-            <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
-            <v-btn color='green' @click="submitForm">Création</v-btn>
-          </div>
-        </v-card>
+        <v-card elevation='4' class='cardModification'>
+            <div id='formModification' >
+
+              <v-container grid-list-lg>
+                <v-layout column>
+
+                    <label><b>Nom</b></label>
+                    <v-text-field type="text" id="nom" v-model="form.nom" required class="wider-text-field"></v-text-field>
+
+                    <v-layout row>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Ref</b></label></v-flex>
+                          <v-flex><v-text-field type="text" id="ref" v-model="form.ref" required class="wider-text-field"></v-text-field></v-flex>  
+                        </v-layout>
+                      </v-flex>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Prix</b></label></v-flex>
+                          <v-flex><v-text-field type='number' id='prix' v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
+                    </v-layout>
+
+                    <v-layout row>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Catégorie</b></label></v-flex>
+                          <v-flex><v-text-field type='text' id='categorie' v-model="form.categorie" required class="wider-text-field"></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Vis</b></label></v-flex>
+                          <v-flex><v-select id="vis" :items="vis" v-model="form.vis" item-value="ref" item-text="nom" required></v-select></v-flex>
+                        </v-layout>  
+                      </v-flex>
+                    </v-layout>
+
+                    <label><b>Description</b></label>
+                    <v-text-field type='text' id='description' v-model="form.description" required class="wider-text-field"></v-text-field>
+
+                    <v-layout row>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
+                          <v-flex><v-text-field id="rang" required></v-text-field></v-flex>
+                        </v-layout>
+                      </v-flex>
+                      <v-flex style="width:50%">
+                        <v-layout column>
+                          <v-flex style="margin-bottom: -25px;"><label><b>Gravure</b></label></v-flex>
+                          <v-flex><v-select id="gravure" :items="gravures" v-model="form.gravure" required></v-select></v-flex>
+                        </v-layout>
+                      </v-flex>
+                    </v-layout>
+
+                    <label><b>Image Avant</b></label>
+                    <v-text-field type='text' id='imageavant' v-model="form.imageavant" required class="wider-text-field"></v-text-field>
+                    <v-img v-bind:src=form.imageavant></v-img>
+                    <br>
+
+                    <label><b>Image Arrière</b></label>
+                    <v-text-field type='text' id='imagearriere' v-model="form.imagearriere" required class="wider-text-field"></v-text-field>
+                    <v-img v-bind:src=form.imagearriere></v-img>
+
+                    <br>
+                    <label style="align-self: center;"><b>Disponibilité</b></label>
+                    <br>
+                    <input type='checkbox' id='disponibilite' v-model="form.disponibilite" style="align-self: center;">
+                    <br>
+
+                    <v-btn color='green' @click="submitForm">Ajouter</v-btn>
+                    
+                </v-layout>
+              </v-container>
+
+            </div>
+          </v-card>
       </div>
     </div>
 
@@ -40,7 +92,7 @@
 <script>
 
 import router from "@/router";
-import {mapState} from "vuex";
+import {mapState,mapMutations} from "vuex";
 
 export default {
 name: 'CreationView',
@@ -74,8 +126,9 @@ computed: {
   ...mapState(['vis'])
 },
 methods: {
+  ...mapMutations(['setSquelettes']),
   validateForm() {
-    if (!this.form.ref || !this.form.nom || !this.form.prix || !this.form.categorie || !this.form.description || !this.form.gravure  || !this.form.imageavant  || !this.form.imagearriere) {
+    if (!this.form.ref) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }
@@ -105,6 +158,7 @@ methods: {
         }
         this.form.rang = plusHauteValeur+1
         this.squelettes.push(this.form)
+        this.setSquelettes(this.squelettes)
         router.push('squelettes')
     }
   },
@@ -135,6 +189,27 @@ padding: 10px 0 20px 0;
 input {
   width: 25px;
   height: 25px;
+}
+#formModification {
+margin-top: 15px;
+margin-left: 9%;
+margin-right: 9%;
+}
+.cardModification {
+padding: 10px 0 20px 0;
+}
+input {
+  width: 25px;
+  height: 25px;
+}
+.wider-text-field{
+  width:100%;
+}
+label{
+  margin-bottom: -13px;
+}
+.highlight {
+  background-color: rgb(236, 236, 236);
 }
 
 </style>

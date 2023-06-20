@@ -29,8 +29,6 @@
             }">
             <template slot="item" slot-scope="row">
               <tr :class="{ 'highlight': materiauModif && row.item.id === materiauModif.id }">
-                <td class="text-left">{{ row.item.type }}</td>
-                <td class="text-left">{{ row.item.categorie }}</td>
                 <td class="text-left">{{ row.item.ref }}</td>
                 <td class="text-left">{{ row.item.nom }}</td>
                 <td>
@@ -64,7 +62,7 @@
                     <v-text-field type="text" id="nom" v-model="formNom" required class="wider-text-field"></v-text-field>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width: 50%;">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Ref</b></label></v-flex>
                           <v-flex><v-text-field type="text" id="ref" v-model="formRef" required class="wider-text-field"></v-text-field></v-flex>  
@@ -79,7 +77,7 @@
                     </v-layout>
 
                     <v-layout row>
-                      <v-flex>
+                      <v-flex style="width: 50%;">
                         <v-layout column>
                           <v-flex style="margin-bottom: -25px;"><label><b>Prix</b></label></v-flex>
                           <v-flex><v-text-field type="number" id="prix" v-model="form.prix" required class="wider-text-field"></v-text-field></v-flex>  
@@ -108,10 +106,6 @@
                       </v-flex>
                     </v-layout>
 
-                    <v-flex style="margin-bottom: -25px;align-self: center;"><label><b>Disponibilité</b></label></v-flex>
-                    <v-flex style="align-self: center;"><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
-                    <br>
-
                     <label><b>Image</b></label>
                     <v-text-field type='text' id='image' v-model="form.image" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.image></v-img>
@@ -120,7 +114,9 @@
                     <label><b>Image Arrière</b></label>
                     <v-text-field type='text' id='imageArriere' v-model="form.imageArriere" required class="wider-text-field"></v-text-field>
                     <v-img v-bind:src=form.imageArriere></v-img>
-           
+
+                    <v-flex style="margin-bottom: -25px;align-self: center;"><label><b>Disponibilité</b></label></v-flex>
+                    <v-flex style="align-self: center;"><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
                     
                 </v-layout>
               </v-container>
@@ -150,10 +146,8 @@ metaInfo: {
 data () {
   return {
     headers: [
-      { text: 'type', value: 'type', sortable: true, align: 'center' },
-      { text: 'catégorie', value: 'categorie', sortable: true, align: 'center' },
       { text: 'ref', value: 'ref', sortable: true, align: 'center' },
-      { text: 'nom', value: 'nom', sortable: true, align: 'center' },
+      { text: 'nom', value: 'nom', sortable: true, align: 'nom' },
       { text: 'Modification', value: 'modification', sortable: false, align: 'center' },
       { text: 'Supression', value: 'supression', sortable: false, align: 'center' }
     ],
@@ -233,7 +227,7 @@ methods: {
     }
   },
   validateForm() {
-    if (!this.formRef || !this.formNom || !this.form.categorie || !this.form.prix || !this.form.rang || !this.form.type || !this.form.matiere) {
+    if (!this.formRef) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
       return false;
     }

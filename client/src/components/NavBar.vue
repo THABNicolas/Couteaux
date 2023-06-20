@@ -23,7 +23,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item to="/couteaux" @click="expand(false)">
+          <v-list-item v-if="userConnected.role !== null" to="/couteaux" @click="expand(false)">
             <v-list-item-icon>
               <v-icon>mdi-knife-military</v-icon>
             </v-list-item-icon>

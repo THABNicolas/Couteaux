@@ -6,9 +6,15 @@ import Sconfig from '../db/config2.js';
 export const getAllAccounts = async(callback) => {
     const connexion = mysql.createConnection(config);
     connexion.connect(function(err){
-        if (err) return callback(err,null);
-        connexion.query('SELECT id,nom,prenom,identifiant,mdp,actif,role FROM utilisateurs', function(err,result){
-            if (err) return callback(err,null);
+        if (err){
+            console.log(err)
+            return callback(err,null);
+        }
+        connexion.query('SELECT id,nom,prenom,identifiant,mdp,actif,role FROM UTILISATEURS', function(err,result){
+            if (err){
+                console.log(err)
+                return callback(err,null);
+            }
             connexion.end();
             let utilisateurs = result.map(u => {
                 return {
