@@ -15,6 +15,35 @@
           </v-card>
         </div>
       </v-layout>
+      <v-layout v-else justify-center>
+        <v-card style="width: 25%;margin-top: 2%;" elevation='4' class='cardConnexion'>
+          <router-link to="/squelettes" justify-content-center>
+            <v-card style="margin-top: 10%;" elevation='4' class='cardConnexion'>
+              <v-btn  depressed color="white">Squelettes</v-btn>
+            </v-card>
+          </router-link>
+          <router-link to="/plaquettes" justify-content-center>
+            <v-card style="margin-top: 10%;" elevation='4' class='cardConnexion'>
+              <v-btn  depressed color="white">Types de plaquettes</v-btn>
+            </v-card>
+          </router-link>
+          <router-link to="/materiaux" justify-content-center>
+            <v-card style="margin-top: 10%;" elevation='4' class='cardConnexion'>
+              <v-btn  depressed color="white">Plaquettes matières</v-btn>
+            </v-card>
+          </router-link>
+          <router-link to="/vis" justify-content-center>
+            <v-card style="margin-top: 20%;margin-bottom: 10%;" elevation='4' class='cardConnexion'>
+              <v-btn  depressed color="white">Vis</v-btn>
+            </v-card>
+          </router-link>
+          <router-link to="/gravures" justify-content-center>
+            <v-card style="margin-top: 10%;margin-bottom: 10%;" elevation='4' class='cardConnexion'>
+              <v-btn  depressed color="white">Gravures</v-btn>
+            </v-card>
+          </router-link>
+        </v-card>
+      </v-layout>
       
   </div>
 </template>

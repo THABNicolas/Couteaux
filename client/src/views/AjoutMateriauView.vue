@@ -36,10 +36,7 @@
                         </v-layout>
                       </v-flex>
                       <v-flex style="width:50%">
-                        <v-layout column>
-                          <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
-                          <v-flex><v-text-field type='number' id='rang' v-model="form.rang" required class="wider-text-field"></v-text-field></v-flex>
-                        </v-layout>
+
                       </v-flex>
                     </v-layout>
 
@@ -86,7 +83,7 @@
 <script>
 
 import router from "@/router";
-import {mapState} from "vuex";
+import {mapState,mapMutations} from "vuex";
 
 export default {
 name: 'CreationView',
@@ -111,9 +108,10 @@ data(){
 },
 computed: {
   ...mapState(['url']),
-  ...mapState(['materiaux'])
+  ...mapState(['materiaux','plaquettes'])
 },
 methods: {
+  ...mapMutations(['setMateriaux']),
   validateForm() {
     if (!this.form.ref) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
@@ -136,7 +134,16 @@ methods: {
             }
         }
         this.form.id = highestId+1
+        let plusHauteValeur = 0;
+        for (const obj of this.materiaux) {
+            const r = parseInt(obj.rang);
+            if (r > plusHauteValeur && obj.categorie == this.form.categorie && obj.type == this.form.type) {
+                plusHauteValeur = r;
+            }
+        }
+        this.form.rang = plusHauteValeur+1
         this.materiaux.push(this.form)
+        this.setMateriaux(this.materiaux)
         router.push('materiaux')
     }
   },

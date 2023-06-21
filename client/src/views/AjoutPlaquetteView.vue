@@ -33,10 +33,7 @@
 
                     <v-layout row>
                       <v-flex style="width: 50%;">
-                        <v-layout column>
-                          <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
-                          <v-flex><v-text-field type="number" id="rang" v-model="form.rang" required class="wider-text-field"></v-text-field></v-flex>  
-                        </v-layout>
+
                       </v-flex>
                       <v-flex style="width: 50%;">
                         <v-layout column>

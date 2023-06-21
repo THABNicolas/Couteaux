@@ -48,10 +48,7 @@
 
                     <v-layout row>
                       <v-flex style="width:50%">
-                        <v-layout column>
-                          <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
-                          <v-flex><v-text-field id="rang" required></v-text-field></v-flex>
-                        </v-layout>
+
                       </v-flex>
                       <v-flex style="width:50%">
                         <v-layout column>
@@ -74,8 +71,8 @@
                     <label style="align-self: center;"><b>Disponibilité</b></label>
                     <br>
                     <input type='checkbox' id='disponibilite' v-model="form.disponibilite" style="align-self: center;">
+                    
                     <br>
-
                     <v-btn color='green' @click="submitForm">Ajouter</v-btn>
                     
                 </v-layout>

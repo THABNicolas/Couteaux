@@ -2,7 +2,7 @@
   
     <div id='inscription'>
       <br><br>
-      <div style="width:55%">
+      <div style="width:35%">
         <v-alert v-if="errorForm" type="error">{{errorForm}}</v-alert>
         <v-card elevation='4' class='cardModification'>
               <div id='formModification' >
@@ -42,10 +42,7 @@
                           </v-layout>
                         </v-flex>
                         <v-flex style="width:50%">
-                          <v-layout column>
-                            <v-flex style="margin-bottom: -25px;"><label><b>Rang</b></label></v-flex>
-                            <v-flex><v-text-field type='text' id='rang' v-model="form.rang" required class="wider-text-field"></v-text-field></v-flex>
-                          </v-layout>
+
                         </v-flex>
                       </v-layout>
   
@@ -58,8 +55,8 @@
                         </v-flex>
                         <v-flex style="width: 50%;">
                           <v-layout column>
-                            <v-flex style="margin-bottom: -25px;"><label><b>Disponibilité</b></label></v-flex>
-                            <v-flex><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
+                            <v-flex style="margin-bottom: -25px;align-self: center;"><label><b>Disponibilité</b></label></v-flex>
+                            <v-flex style="align-self: center;"><br><input type='checkbox' id='disponibilite' v-model="form.disponibilite"></v-flex>
                           </v-layout>
                         </v-flex>
                       </v-layout>
@@ -90,7 +87,7 @@
 <script>
 
 import router from "@/router";
-import {mapState} from "vuex";
+import {mapState,mapMutations} from "vuex";
 
 export default {
 name: 'CreationView',
@@ -119,6 +116,7 @@ computed: {
   ...mapState(['gravures'])
 },
 methods: {
+  ...mapMutations(['setGravures']),
   validateForm() {
     if (!this.form.ref) {
       this.errorForm = "Veuillez remplir tous les champs obligatoires";
