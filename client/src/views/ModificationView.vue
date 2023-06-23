@@ -67,7 +67,7 @@ export default {
     },
     submitForm() {
       if (this.validateForm()) {
-        axios.post(this.url+"modification", this.form)
+        axios.post("modification", this.form)
           .then((rep) => {
             if (rep.data.message == "Erreur de modification") {
               this.setMessageMod(rep.data.message);

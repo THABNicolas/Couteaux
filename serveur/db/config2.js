@@ -1,10 +1,10 @@
 var Sconfig = {
-    server   : 'PRT_JULIEN2022\\WS',
-    user     : 'ADM',
-    password : 'ADM',
-    database : 'THABORA202303',
+    server: process.env.DB_SERVER,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 
-    encrypt  : false
+    encrypt: false
 };
 
 export default Sconfig;

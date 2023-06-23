@@ -135,7 +135,7 @@ export default {
     },
   },
   created() {
-    axios.get(this.url+"comptes")
+    axios.get("comptes")
         .then((rep) => {
           this.setComptes(rep.data.tab);
         })

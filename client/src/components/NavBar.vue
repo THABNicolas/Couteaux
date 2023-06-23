@@ -133,9 +133,11 @@
     methods: {
       ...mapMutations(["setUserConnected"]),
       ...mapMutations(["setNav"]),
+      ...mapMutations(["setMessageCo"]),
       logout() {
         this.$cookie.delete('userAuthentificated');
         this.setUserConnected({ role: null });
+        this.setMessageCo('');
         this.setNav(false);
       },
       expand(etat) {

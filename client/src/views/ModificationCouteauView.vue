@@ -53,7 +53,7 @@ methods: {
   },
   submitForm() {
     if (this.validateForm()) {
-      axios.post(this.url+"couteauM", this.form)
+      axios.post("couteauM", this.form)
         .then(() => {
             this.$router.push('/');
         })

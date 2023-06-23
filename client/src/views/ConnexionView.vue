@@ -49,7 +49,7 @@ export default {
       }
     },
     submitForm() {
-      axios.post(this.url+"connexion", this.form)
+      axios.post("connexion", this.form)
           .then((rep) => {
             this.setMessageCo(rep.data.message);
             if (rep.data.utilisateur){

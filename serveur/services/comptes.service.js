@@ -56,11 +56,16 @@ export const updateAccount = async(id, nom, prenom, identifiant, actif, role, ca
     });
 };
 
-export const getAllCouteaux = async(callback) => {
-    await sql.connect(Sconfig);
-    const couteaux = await sql.query("SELECT ARTCODE, ARTDESIGNATION FROM ARTICLES INNER JOIN ARTFAMILLES ON ARTICLES.AFMID = ARTFAMILLES.AFMID WHERE ARTFAMILLES.AFMCODE = 'COUTEAU' AND ARTICLES.ARTISACTIF='O'");
-    await sql.close();
-    return callback(null,couteaux.recordsets[0]);
+export const getAllCouteaux = async (callback) => {
+    try {
+        await sql.connect(Sconfig);
+        const couteaux = await sql.query("SELECT ARTCODE, ARTDESIGNATION FROM ARTICLES INNER JOIN ARTFAMILLES ON ARTICLES.AFMID = ARTFAMILLES.AFMID WHERE ARTFAMILLES.AFMCODE = 'COUTEAU' AND ARTICLES.ARTISACTIF='O'");
+        await sql.close();
+        return callback(null, couteaux.recordsets[0]);
+    } catch (error) {
+        // Gérer l'erreur ici
+        return callback(error, null);
+    }
 };
 
 export const updateCouteau = async(artcode, artdesignation, callback) => {

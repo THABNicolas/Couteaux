@@ -64,7 +64,7 @@ export default {
     },
     submitForm() {
       if (this.validateForm()) {
-        axios.post(this.url+"inscription", this.form)
+        axios.post("inscription", this.form)
             .then((rep) => {
               if (rep.data.message=="Erreur de création"){
                 this.setMessageIn(rep.data.message);

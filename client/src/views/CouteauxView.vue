@@ -110,7 +110,7 @@
       },
     },
     created(){
-      axios.get(this.url+"couteaux")
+      axios.get("couteaux")
           .then((rep) => {
             this.couteaux = rep.data;
           })
